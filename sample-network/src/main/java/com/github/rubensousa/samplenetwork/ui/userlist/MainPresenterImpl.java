@@ -127,11 +127,4 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
         attachMvpCallback(TASK_REFRESH, mvpCallback);
         mvpCallback.enqueue(mService.getUsers(0));
     }
-
-
-    @Override
-    public void loadMore(int offset) {
-
-    }
-
 }

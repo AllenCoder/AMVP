@@ -8,6 +8,4 @@ public interface MainPresenter extends BasePresenter<MainView> {
     void refresh();
 
     void load();
-
-    void loadMore(int offset);
 }
