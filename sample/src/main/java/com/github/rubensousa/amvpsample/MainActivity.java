@@ -1,4 +1,4 @@
-package com.github.rubensousa.amvpsample.ui;
+package com.github.rubensousa.amvpsample;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
-import com.github.rubensousa.amvpsample.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
