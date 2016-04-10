@@ -16,7 +16,7 @@ Add the following to your build.gradle:
         }
         
         dependencies {
-            compile 'com.github.rubensousa:AMVP:{currentVersion}'
+            compile 'com.github.rubensousa:AMVP:0.9'
         }
 
 
@@ -102,7 +102,7 @@ The key is in the class MvpCallback, that receives life cycle events from the Pr
 
 ## Sample dependencies
 
-##### Butterknife: https://github.com/square/okhttp
+##### Butterknife: https://github.com/JakeWharton/butterknife
 ##### Retrofit: https://github.com/square/retrofit
 ##### Okhttp: https://github.com/square/okhttp
 ##### Gson: https://github.com/google/gson
