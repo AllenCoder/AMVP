@@ -65,9 +65,7 @@ public abstract class MvpSupportFragment<V extends MvpView<P>, P extends Present
         super.onViewStateRestored(savedInstanceState);
         if (mPresenter != null) {
             mPresenter.attachView((V) this);
-            if (savedInstanceState != null) {
-                mPresenter.onViewStateRestored(savedInstanceState);
-            }
+            mPresenter.onViewStateRestored(savedInstanceState);
         }
     }
 

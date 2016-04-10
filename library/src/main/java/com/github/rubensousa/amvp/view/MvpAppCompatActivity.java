@@ -55,7 +55,7 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Prese
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (mPresenter != null && savedInstanceState != null) {
+        if (mPresenter != null) {
             mPresenter.onViewStateRestored(savedInstanceState);
         }
     }

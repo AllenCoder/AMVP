@@ -63,7 +63,7 @@ public interface Presenter<T extends MvpView> {
      *
      * @param savedInstanceState Previous saved state
      */
-    void onViewStateRestored(@NonNull Bundle savedInstanceState);
+    void onViewStateRestored(@Nullable Bundle savedInstanceState);
 
     /**
      * Should be called when this presenter isn't being used anymore
