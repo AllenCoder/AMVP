@@ -36,7 +36,7 @@ public abstract class MvpSupportFragment<V extends MvpView<P>, P extends Present
                     mPresenter.onCreate(savedInstanceState);
                     mPresenterCache.cache(getPresenterKey(), mPresenter);
                 }
-                onPresenterPrepared(mPresenter);
+                setPresenter(mPresenter);
             }
         }
     }

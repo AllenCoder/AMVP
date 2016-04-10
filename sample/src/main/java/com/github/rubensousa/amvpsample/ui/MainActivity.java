@@ -45,7 +45,7 @@ public class MainActivity extends MvpAppCompatActivity<MainView, MainPresenter> 
     }
 
     @Override
-    public void onPresenterPrepared(MainPresenter presenter) {
+    public void setPresenter(MainPresenter presenter) {
         mPresenter = presenter;
     }
 

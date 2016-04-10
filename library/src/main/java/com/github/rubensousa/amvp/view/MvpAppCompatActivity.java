@@ -30,7 +30,7 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Prese
                 mPresenter.onCreate(savedInstanceState);
                 mPresenterCache.cache(getPresenterKey(), mPresenter);
             }
-            onPresenterPrepared(mPresenter);
+            setPresenter(mPresenter);
         }
 
     }
@@ -106,7 +106,7 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Prese
     public void onLoadFinished(Loader<P> loader, P data) {
         mPresenter = data;
         if (mPresenter != null) {
-            onPresenterPrepared(mPresenter);
+            setPresenter(mPresenter);
         }
     }
 

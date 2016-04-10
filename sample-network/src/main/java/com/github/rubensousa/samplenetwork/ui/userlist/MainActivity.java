@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     }
 
     @Override
-    public void onPresenterPrepared(MainPresenter presenter) {
+    public void setPresenter(MainPresenter presenter) {
         mPresenter = presenter;
     }
 

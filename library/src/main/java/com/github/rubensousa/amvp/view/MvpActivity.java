@@ -31,7 +31,7 @@ public abstract class MvpActivity<V extends MvpView<P>, P extends Presenter<V>> 
                 mPresenter.onCreate(savedInstanceState);
                 mPresenterCache.cache(getPresenterKey(), mPresenter);
             }
-            onPresenterPrepared(mPresenter);
+            setPresenter(mPresenter);
         }
     }
 
@@ -106,7 +106,7 @@ public abstract class MvpActivity<V extends MvpView<P>, P extends Presenter<V>> 
     public void onLoadFinished(Loader<P> loader, P data) {
         mPresenter = data;
         if (mPresenter != null) {
-            onPresenterPrepared(mPresenter);
+            setPresenter(mPresenter);
         }
     }
 
