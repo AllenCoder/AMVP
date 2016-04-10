@@ -2,6 +2,7 @@ package com.github.rubensousa.samplenetwork.ui.general;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.github.rubensousa.amvp.AbstractPresenterImpl;
 
@@ -27,7 +28,7 @@ public abstract class BasePresenterImpl<V extends BaseView> extends AbstractPres
     }
 
     @Override
-    public void onViewStateRestored(@NonNull Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         Icepick.restoreInstanceState(this, savedInstanceState);
     }
 
