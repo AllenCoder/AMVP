@@ -16,7 +16,7 @@ Add the following to your build.gradle:
         }
         
         dependencies {
-            compile 'com.github.rubensousa:AMVP:{currentVersion}'
+            compile 'com.github.rubensousa:AMVP:0.9'
         }
 
 
