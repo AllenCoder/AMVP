@@ -46,7 +46,7 @@ public abstract class AbstractPresenterImpl<V extends MvpView> implements Presen
     }
 
     @Override
-    public void onViewStateRestored(@NonNull Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
 
     }
 
