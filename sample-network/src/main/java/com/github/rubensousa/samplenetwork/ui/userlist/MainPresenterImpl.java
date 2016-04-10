@@ -2,7 +2,6 @@ package com.github.rubensousa.samplenetwork.ui.userlist;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 
@@ -45,7 +44,7 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void onViewStateRestored(@NonNull Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
         /**
@@ -73,9 +72,10 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
 
         MvpCallback<ArrayList<User>> mvpCallback
                 = new MvpCallback<>(getView(), new Callback<ArrayList<User>>() {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                // This callback only gets called if view isn't null
+                // This callback only gets called if view isn't null, so it's safe to not check for null
                 MainView view = getView();
                 view.showRefreshing(false);
 
@@ -85,6 +85,7 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
                 loading = false;
             }
 
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 // This callback only gets called if view isn't null
@@ -106,6 +107,7 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
 
         MvpCallback<ArrayList<User>> mvpCallback
                 = new MvpCallback<>(getView(), new Callback<ArrayList<User>>() {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 MainView view = getView();
@@ -116,7 +118,7 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
                 }
                 refreshing = false;
             }
-
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 getView().showRefreshing(false);
