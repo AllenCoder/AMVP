@@ -27,7 +27,7 @@ import com.github.rubensousa.amvp.Presenter;
 import com.github.rubensousa.amvp.cache.PresenterCache;
 
 public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Presenter<V>>
-        extends AppCompatActivity implements MvpView<P>{
+        extends AppCompatActivity implements MvpView<P> {
 
     private PresenterCache mPresenterCache;
     private P mPresenter;
@@ -39,8 +39,10 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Prese
         mPresenter = mPresenterCache.get(getPresenterKey());
         if (mPresenter == null) {
             mPresenter = createPresenter();
-            mPresenter.onCreate(savedInstanceState);
-            mPresenterCache.cache(getPresenterKey(), mPresenter);
+            if (mPresenter != null) {
+                mPresenter.onCreate(savedInstanceState);
+                mPresenterCache.cache(getPresenterKey(), mPresenter);
+            }
         }
     }
 

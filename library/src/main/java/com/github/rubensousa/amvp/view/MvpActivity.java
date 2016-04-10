@@ -40,8 +40,10 @@ public abstract class MvpActivity<V extends MvpView<P>, P extends Presenter<V>> 
         mPresenter = mPresenterCache.get(getPresenterKey());
         if (mPresenter == null) {
             mPresenter = createPresenter();
-            mPresenter.onCreate(savedInstanceState);
-            mPresenterCache.cache(getPresenterKey(), mPresenter);
+            if(mPresenter != null) {
+                mPresenter.onCreate(savedInstanceState);
+                mPresenterCache.cache(getPresenterKey(), mPresenter);
+            }
         }
 
     }

@@ -28,7 +28,7 @@ import com.github.rubensousa.amvp.cache.PresenterCache;
 
 
 public abstract class MvpFragment<V extends MvpView<P>, P extends Presenter<V>> extends Fragment
-        implements MvpView<P>{
+        implements MvpView<P> {
 
     private PresenterCache mPresenterCache;
     private P mPresenter;
@@ -45,8 +45,10 @@ public abstract class MvpFragment<V extends MvpView<P>, P extends Presenter<V>> 
             mPresenter = mPresenterCache.get(getPresenterKey());
             if (mPresenter == null) {
                 mPresenter = createPresenter();
-                mPresenter.onCreate(savedInstanceState);
-                mPresenterCache.cache(getPresenterKey(), mPresenter);
+                if (mPresenter != null) {
+                    mPresenter.onCreate(savedInstanceState);
+                    mPresenterCache.cache(getPresenterKey(), mPresenter);
+                }
             }
         }
     }
