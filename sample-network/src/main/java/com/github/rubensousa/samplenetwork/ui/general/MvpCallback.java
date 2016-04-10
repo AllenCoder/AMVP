@@ -30,11 +30,11 @@ public class MvpCallback<T> implements Callback<T> {
         if (mCallFinished && mCallback != null && mCall != null) {
             if (mResponse != null) {
                 mCallback.onResponse(mCall, mResponse);
-                mCallback = null;
+                onDestroy();
             } else {
                 if (mThrowable != null) {
                     mCallback.onFailure(mCall, mThrowable);
-                    mCallback = null;
+                    onDestroy();
                 }
             }
         }
@@ -98,6 +98,7 @@ public class MvpCallback<T> implements Callback<T> {
 
         if (mView != null) {
             mCallback.onResponse(call, response);
+            onDestroy();
         }
 
         mCallFinished = true;
@@ -111,6 +112,7 @@ public class MvpCallback<T> implements Callback<T> {
 
         if (mView != null) {
             mCallback.onFailure(call, t);
+            onDestroy();
         }
 
         mCallFinished = true;
