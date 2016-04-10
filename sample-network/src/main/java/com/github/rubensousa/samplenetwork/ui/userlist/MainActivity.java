@@ -28,7 +28,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    private MainPresenter mPresenter;
     private UserAdapter mAdapter;
 
     @Override
@@ -74,11 +73,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     }
 
     @Override
-    public void setPresenter(MainPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void setUsers(ArrayList<User> users) {
         mAdapter.setUsers(users);
     }
@@ -102,6 +96,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     @Override
     public void onRefresh() {
-        mPresenter.refresh();
+        getPresenter().refresh();
     }
 }

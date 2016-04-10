@@ -12,12 +12,4 @@ public interface MvpView<P extends Presenter> {
     P getPresenter();
 
     P createPresenter();
-
-    /**
-     * Called when the presenter is ready to be used after being fetched from the cache
-     * or created for the first time
-     *
-     * @param presenter presenter created or fetched from the cache
-     */
-    void setPresenter(P presenter);
 }

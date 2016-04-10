@@ -22,8 +22,6 @@ public class MainActivity extends MvpAppCompatActivity<MainView, MainPresenter> 
     @Bind(R.id.textView)
     TextView textView;
 
-    private MainPresenter mPresenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,17 +34,12 @@ public class MainActivity extends MvpAppCompatActivity<MainView, MainPresenter> 
     @SuppressWarnings("unused")
     @OnClick(R.id.button)
     public void onGenerateClick() {
-        mPresenter.generateNumber();
+        getPresenter().generateNumber();
     }
 
     @Override
     public MainPresenter createPresenter() {
         return new MainPresenterImpl();
-    }
-
-    @Override
-    public void setPresenter(MainPresenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override
