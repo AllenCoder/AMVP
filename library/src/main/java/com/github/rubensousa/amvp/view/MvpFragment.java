@@ -9,11 +9,10 @@ import android.os.Bundle;
 import com.github.rubensousa.amvp.MvpView;
 import com.github.rubensousa.amvp.Presenter;
 import com.github.rubensousa.amvp.cache.PresenterCache;
-import com.github.rubensousa.amvp.cache.PresenterLoader;
 
 
 public abstract class MvpFragment<V extends MvpView<P>, P extends Presenter<V>> extends Fragment
-        implements MvpView<P>, LoaderManager.LoaderCallbacks<P> {
+        implements MvpView<P>{
 
     private PresenterCache mPresenterCache;
     private P mPresenter;
@@ -22,20 +21,16 @@ public abstract class MvpFragment<V extends MvpView<P>, P extends Presenter<V>> 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenterCache = PresenterCache.getInstance();
-        if (mPresenterCache.getCachingMethod() == PresenterCache.CACHE_LOADERS) {
-            getLoaderManager().initLoader(PresenterLoader.LOADER_ID, null, this);
+
+        // Presenter may be not null if setRetainInstance(true) was called
+        if (mPresenter != null) {
+            mPresenterCache.cache(getPresenterKey(), mPresenter);
         } else {
-            // Presenter may be not null if setRetainInstance(true) was called
-            if (mPresenter != null) {
+            mPresenter = mPresenterCache.get(getPresenterKey());
+            if (mPresenter == null) {
+                mPresenter = createPresenter();
+                mPresenter.onCreate(savedInstanceState);
                 mPresenterCache.cache(getPresenterKey(), mPresenter);
-            } else {
-                mPresenter = mPresenterCache.get(getPresenterKey());
-                if (mPresenter == null) {
-                    mPresenter = createPresenter();
-                    mPresenter.onCreate(savedInstanceState);
-                    mPresenterCache.cache(getPresenterKey(), mPresenter);
-                }
-                setPresenter(mPresenter);
             }
         }
     }
@@ -110,21 +105,5 @@ public abstract class MvpFragment<V extends MvpView<P>, P extends Presenter<V>> 
     @Override
     public String getPresenterKey() {
         return getClass().getSimpleName();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Loader<P> onCreateLoader(int id, Bundle args) {
-        return new PresenterLoader<>(getActivity(), (V) this);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<P> loader, P data) {
-        mPresenter = data;
-    }
-
-    @Override
-    public void onLoaderReset(Loader<P> loader) {
-        mPresenter = null;
     }
 }

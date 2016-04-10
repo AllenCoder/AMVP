@@ -9,10 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.github.rubensousa.amvp.MvpView;
 import com.github.rubensousa.amvp.Presenter;
 import com.github.rubensousa.amvp.cache.PresenterCache;
-import com.github.rubensousa.amvp.cache.PresenterSupportLoader;
 
 public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Presenter<V>>
-        extends AppCompatActivity implements MvpView<P>, LoaderManager.LoaderCallbacks<P> {
+        extends AppCompatActivity implements MvpView<P>{
 
     private PresenterCache mPresenterCache;
     private P mPresenter;
@@ -21,18 +20,12 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Prese
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenterCache = PresenterCache.getInstance();
-        if (mPresenterCache.getCachingMethod() == PresenterCache.CACHE_LOADERS) {
-            getSupportLoaderManager().initLoader(PresenterSupportLoader.LOADER_ID, null, this);
-        } else {
-            mPresenter = mPresenterCache.get(getPresenterKey());
-            if (mPresenter == null) {
-                mPresenter = createPresenter();
-                mPresenter.onCreate(savedInstanceState);
-                mPresenterCache.cache(getPresenterKey(), mPresenter);
-            }
-            setPresenter(mPresenter);
+        mPresenter = mPresenterCache.get(getPresenterKey());
+        if (mPresenter == null) {
+            mPresenter = createPresenter();
+            mPresenter.onCreate(savedInstanceState);
+            mPresenterCache.cache(getPresenterKey(), mPresenter);
         }
-
     }
 
     @Override
@@ -94,25 +87,6 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Prese
     @Override
     public String getPresenterKey() {
         return getClass().getSimpleName();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Loader<P> onCreateLoader(int id, Bundle args) {
-        return new PresenterSupportLoader<>(this, (V) this);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<P> loader, P data) {
-        mPresenter = data;
-        if (mPresenter != null) {
-            setPresenter(mPresenter);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<P> loader) {
-        mPresenter = null;
     }
 
     @Override

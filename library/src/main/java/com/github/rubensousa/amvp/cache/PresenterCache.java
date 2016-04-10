@@ -10,38 +10,21 @@ import java.util.Map;
 
 public class PresenterCache {
 
-    public static final int CACHE_LOADERS = 0;
-    public static final int CACHE_SINGLETON = 1;
-
     private static PresenterCache sPresenterCache;
 
     private Map<String, Presenter<?>> mCache;
-    private int mCachingMethod = CACHE_SINGLETON;
 
-    protected PresenterCache(int method) {
+    protected PresenterCache() {
         mCache = new LinkedHashMap<>();
-        mCachingMethod = method;
-    }
-
-    public synchronized static PresenterCache init(int method) {
-        if (method != CACHE_LOADERS && method != CACHE_SINGLETON) {
-            throw new IllegalArgumentException("Use CACHE_LOADERS or CACHE_SINGLETON");
-        }
-        sPresenterCache = new PresenterCache(method);
-        return sPresenterCache;
     }
 
     public static PresenterCache getInstance() {
         if (sPresenterCache == null) {
             synchronized (PresenterCache.class) {
-                sPresenterCache = new PresenterCache(CACHE_SINGLETON);
+                sPresenterCache = new PresenterCache();
             }
         }
         return sPresenterCache;
-    }
-
-    public int getCachingMethod() {
-        return mCachingMethod;
     }
 
     public synchronized void cache(String key, Presenter<?> presenter) {
