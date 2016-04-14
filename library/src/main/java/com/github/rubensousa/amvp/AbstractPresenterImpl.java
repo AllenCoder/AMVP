@@ -60,4 +60,8 @@ public abstract class AbstractPresenterImpl<V extends MvpView> implements Presen
     public V getView() {
         return mView;
     }
+
+    public boolean isViewAttached() {
+        return mView != null;
+    }
 }
