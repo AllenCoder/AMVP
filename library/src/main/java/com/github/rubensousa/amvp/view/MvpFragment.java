@@ -58,6 +58,7 @@ public abstract class MvpFragment<V extends MvpView<P>, P extends Presenter<V>> 
         super.onSaveInstanceState(outState);
         if (mPresenter != null) {
             mPresenter.onSaveInstanceState(outState);
+            mPresenter.detachView();
         }
     }
 

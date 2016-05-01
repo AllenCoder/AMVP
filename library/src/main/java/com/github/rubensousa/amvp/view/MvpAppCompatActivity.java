@@ -51,6 +51,7 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Prese
         super.onSaveInstanceState(outState);
         if (mPresenter != null) {
             mPresenter.onSaveInstanceState(outState);
+            mPresenter.detachView();
         }
     }
 

@@ -58,6 +58,7 @@ public abstract class MvpSupportFragment<V extends MvpView<P>, P extends Present
         super.onSaveInstanceState(outState);
         if (mPresenter != null) {
             mPresenter.onSaveInstanceState(outState);
+            mPresenter.detachView();
         }
     }
 
