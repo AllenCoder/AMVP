@@ -11,72 +11,82 @@ Please, check the sample projects.
 
 Add the following to your build.gradle:
 
-        repositories{
-            maven { url "https://jitpack.io" }
-        }
-        
-        dependencies {
-            compile 'com.github.rubensousa:AMVP:0.9'
-        }
-
+```groovy
+    repositories{
+        maven { url "https://jitpack.io" }
+    }
+    
+    dependencies {
+        compile 'com.github.rubensousa:AMVP:1.0'
+    }
+```
 
 ## How to use
 
 1. Create your CustomView interface:
 
-        public interface CustomView extends MvpView<CustomPresenter>{
-        
-        }
+```java
+    public interface CustomView extends MvpView<CustomPresenter>{
+    
+    }
+```
 
 2. Create your CustomPresenter interface:
 
-        public interface CustomPresenter extends Presenter<CustomView>{
-        
-        }
+```java
+    public interface CustomPresenter extends Presenter<CustomView>{
+    
+    }
+```
 
 3. Extend your activity from MvpAppCompatActivity or MvpActivity:
 
-        public class MainActivity extends MvpAppCompatActivity<CustomView, CustomPresenter> implements CustomView {
-        
-            @Override
-            protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_main);
-            }
-       
-            @Override
-            public CustomPresenter createPresenter() {
-                return new CustomPresenterImpl();
-            }
+```java
+    public class MainActivity extends MvpAppCompatActivity<CustomView, CustomPresenter> implements CustomView {
+    
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
         }
+   
+        @Override
+        public CustomPresenter createPresenter() {
+            return new CustomPresenterImpl();
+        }
+    }
+```
         
 4. Or your fragment from MvpFragment or MvpSupportFragment:
 
-        public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
-      
-            @Nullable
-            @Override
-            public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-                return super.onCreateView(inflater, container, savedInstanceState);
-            }
-       
-            @Override
-            public CustomPresenter createPresenter() {
-                return new CustomPresenterImpl();
-            }
+```java
+    public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
+  
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            return super.onCreateView(inflater, container, savedInstanceState);
         }
+   
+        @Override
+        public CustomPresenter createPresenter() {
+            return new CustomPresenterImpl();
+        }
+    }
+```
         
 5. Use getPresenter() in your View to get a reference to the current Presenter.
 
-
-        public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
-      
-            ...
-            
-            public void onClick(){
-                getPresenter().doSomething();
-            }
+```java
+    public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
+  
+        ...
+        
+        public void onClick(){
+            getPresenter().doSomething();
         }
+    }
+```
 
 6. (Optional) Extend your CustomPresenterImpl from AbstractPresenterImpl to avoid having to implement all of Presenter's methods each time.
         
