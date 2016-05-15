@@ -18,59 +18,40 @@ package com.github.rubensousa.amvp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-
 import com.github.rubensousa.amvp.MvpView;
 import com.github.rubensousa.amvp.Presenter;
-import com.github.rubensousa.amvp.cache.PresenterCache;
+import com.github.rubensousa.amvp.delegate.MvpDelegate;
+import com.github.rubensousa.amvp.delegate.MvpDelegateCallbacks;
+import com.github.rubensousa.amvp.delegate.MvpDelegateImpl;
 
 
 public abstract class MvpSupportFragment<V extends MvpView<P>, P extends Presenter<V>> extends Fragment
-        implements MvpView<P> {
+        implements MvpView<P>,MvpDelegateCallbacks<V,P> {
 
-    private PresenterCache mPresenterCache;
+    private MvpDelegate<V, P> mDelegate;
     private P mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenterCache = PresenterCache.getInstance();
-
-        // Presenter may be not null if setRetainInstance(true) was called
-        if (mPresenter != null) {
-            mPresenterCache.cache(getPresenterKey(), mPresenter);
-        } else {
-            mPresenter = mPresenterCache.get(getPresenterKey());
-            if (mPresenter == null) {
-                mPresenter = createPresenter();
-                if (mPresenter != null) {
-                    mPresenter.onCreate(savedInstanceState);
-                    mPresenterCache.cache(getPresenterKey(), mPresenter);
-                }
-            }
-        }
+        mDelegate = new MvpDelegateImpl<>(this);
+        mPresenter = mDelegate.onCreate(savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mPresenter != null) {
-            mPresenter.onSaveInstanceState(outState);
-            mPresenter.detachView();
-        }
+        mDelegate.onSaveInstanceState(outState);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        if (mPresenter != null) {
-            mPresenter.attachView((V) this);
-            mPresenter.onViewStateRestored(savedInstanceState);
-        }
+        mDelegate.onViewStateRestored(savedInstanceState);
     }
+
 
     /**
      * Since onDestroy() isn't guaranteed to be called,
@@ -79,39 +60,34 @@ public abstract class MvpSupportFragment<V extends MvpView<P>, P extends Present
     @Override
     public void onPause() {
         super.onPause();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            if (getActivity().isFinishing()) {
-                mPresenter.onDestroy();
-                mPresenterCache.remove(getPresenterKey());
-            }
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (mPresenter != null) {
-            mPresenter.attachView((V) this);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mPresenter != null) {
-            mPresenter.attachView((V) this);
+        mDelegate.detachView();
+        if (getActivity().isFinishing()) {
+            mDelegate.destroyPresenter();
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+        mDelegate.detachView();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mDelegate.attachView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mDelegate.attachView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mDelegate.attachView();
     }
 
     @Override
@@ -122,5 +98,11 @@ public abstract class MvpSupportFragment<V extends MvpView<P>, P extends Present
     @Override
     public String getPresenterKey() {
         return getClass().getSimpleName();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public V getMvpView() {
+        return (V) this;
     }
 }

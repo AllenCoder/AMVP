@@ -14,7 +14,7 @@ import icepick.Icepick;
 
 
 public abstract class BasePresenterImpl<V extends BaseView> extends AbstractPresenterImpl<V>
-        implements BasePresenter<V> {
+        implements BasePresenter<V>, MvpCallback.OnFinishedListener {
 
     private Map<String, MvpCallback> mMvpCallbacks;
 
@@ -64,17 +64,16 @@ public abstract class BasePresenterImpl<V extends BaseView> extends AbstractPres
 
     @Override
     public void attachMvpCallback(String key, MvpCallback mvpCallback) {
-        Iterator<MvpCallback> iterator = mMvpCallbacks.values().iterator();
-        while (iterator.hasNext()) {
-            MvpCallback callback = iterator.next();
-            String callbackKey = callback.getKey();
-            // Remove callbacks registered with the same key or that already finished
-            if (callback.isCallFinished() || (callbackKey != null && callbackKey.equals(key))) {
-                callback.onDestroy();
-                iterator.remove();
-            }
+        // Remove callback registered with the same key
+        MvpCallback old = mMvpCallbacks.get(key);
+
+        if (old != null) {
+            old.onDestroy();
+            mMvpCallbacks.remove(key);
         }
+
         mvpCallback.setKey(key);
+        mvpCallback.setOnFinishedListener(this);
         mMvpCallbacks.put(key, mvpCallback);
     }
 
@@ -98,5 +97,12 @@ public abstract class BasePresenterImpl<V extends BaseView> extends AbstractPres
     public boolean isTaskExecuting(String key) {
         MvpCallback callback = mMvpCallbacks.get(key);
         return callback != null && callback.isCallEnqueued() && !callback.isCallFinished();
+    }
+
+    @Override
+    public void onFinished(MvpCallback mvpCallback) {
+        synchronized (this) {
+            mMvpCallbacks.remove(mvpCallback.getKey());
+        }
     }
 }

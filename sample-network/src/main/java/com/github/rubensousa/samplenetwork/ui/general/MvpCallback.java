@@ -17,11 +17,16 @@ public class MvpCallback<T> implements Callback<T> {
     private Callback<T> mCallback;
     private boolean mCallFinished;
     private boolean mCallEnqueued;
+    private OnFinishedListener mListener;
 
     public MvpCallback(BaseView view, Callback<T> callback) {
         mView = view;
         mCallback = callback;
         mCallFinished = false;
+    }
+
+    public void setOnFinishedListener(OnFinishedListener listener){
+        mListener = listener;
     }
 
     public void attachView(BaseView view) {
@@ -102,6 +107,9 @@ public class MvpCallback<T> implements Callback<T> {
         }
 
         mCallFinished = true;
+        if(mListener != null){
+            mListener.onFinished(this);
+        }
     }
 
     @Override
@@ -116,5 +124,12 @@ public class MvpCallback<T> implements Callback<T> {
         }
 
         mCallFinished = true;
+        if(mListener != null){
+            mListener.onFinished(this);
+        }
+    }
+
+    public interface OnFinishedListener{
+        void onFinished(MvpCallback mvpCallback);
     }
 }

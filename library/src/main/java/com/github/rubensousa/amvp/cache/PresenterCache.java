@@ -44,11 +44,23 @@ public class PresenterCache {
     }
 
     public synchronized void cache(String key, Presenter<?> presenter) {
-        mCache.put(key, presenter);
+        Presenter old = mCache.put(key, presenter);
+        if (old != null && old != presenter) {
+            old.onDestroy();
+        }
     }
 
     public synchronized void remove(String key) {
-        mCache.remove(key);
+        remove(key, true);
+    }
+
+    public synchronized void remove(String key, boolean destroy) {
+
+        Presenter presenter = mCache.remove(key);
+
+        if (destroy && presenter != null) {
+            presenter.onDestroy();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -67,9 +79,14 @@ public class PresenterCache {
         }
     }
 
-    public synchronized void clear() {
+    public synchronized void clear(boolean destroy) {
+        if (destroy) {
+            for (Presenter p : mCache.values()) {
+                p.onDestroy();
+            }
+        }
+
         mCache.clear();
     }
-
 
 }

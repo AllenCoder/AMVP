@@ -16,10 +16,10 @@
 
 package com.github.rubensousa.amvp.view;
 
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatDialogFragment;
 
 import com.github.rubensousa.amvp.MvpView;
 import com.github.rubensousa.amvp.Presenter;
@@ -27,52 +27,66 @@ import com.github.rubensousa.amvp.delegate.MvpDelegate;
 import com.github.rubensousa.amvp.delegate.MvpDelegateCallbacks;
 import com.github.rubensousa.amvp.delegate.MvpDelegateImpl;
 
-public abstract class MvpActivity<V extends MvpView<P>, P extends Presenter<V>> extends Activity
-        implements MvpView<P>, MvpDelegateCallbacks<V, P> {
+
+public abstract class MvpAppCompatDialogFragment<V extends MvpView<P>, P extends Presenter<V>>
+        extends AppCompatDialogFragment implements MvpView<P>, MvpDelegateCallbacks<V, P> {
 
     private MvpDelegate<V, P> mDelegate;
     private P mPresenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDelegate = new MvpDelegateImpl<>(this);
         mPresenter = mDelegate.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mDelegate.onSaveInstanceState(outState);
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
         mDelegate.onViewStateRestored(savedInstanceState);
     }
 
+    /**
+     * Since onDestroy() isn't guaranteed to be called,
+     * we check if the current activity is finishing
+     */
     @Override
-    protected void onStop() {
+    public void onPause() {
+        super.onPause();
+        mDelegate.detachView();
+        if (getActivity().isFinishing()) {
+            mDelegate.destroyPresenter();
+        }
+    }
+
+    @Override
+    public void onStop() {
         super.onStop();
         mDelegate.detachView();
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         mDelegate.attachView();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onResume() {
+        super.onResume();
         mDelegate.attachView();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         mDelegate.attachView();
     }
 
@@ -84,18 +98,6 @@ public abstract class MvpActivity<V extends MvpView<P>, P extends Presenter<V>> 
     @Override
     public String getPresenterKey() {
         return getClass().getSimpleName();
-    }
-
-    @Override
-    public void finish() {
-        mDelegate.destroyPresenter();
-        super.finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        mDelegate.destroyPresenter();
-        super.onBackPressed();
     }
 
     @SuppressWarnings("unchecked")
