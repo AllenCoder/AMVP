@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView,
+public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implements Main.View,
         SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
     @Bind(R.id.recyclerView)
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     }
 
     @Override
-    public MainPresenter createPresenter() {
+    public Main.Presenter createPresenter() {
         return new MainPresenterImpl();
     }
 

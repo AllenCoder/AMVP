@@ -8,8 +8,8 @@ import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
 
 import icepick.Icepick;
 
-public abstract class BaseActivity<V extends BaseView<P>, P extends BasePresenter<V>>
-        extends MvpAppCompatActivity<V, P> implements BaseView<P> {
+public abstract class BaseActivity<V extends Base.View<P>, P extends Base.Presenter<V>>
+        extends MvpAppCompatActivity<V, P> implements Base.View<P> {
 
     private ProgressDialog mProgressDialog;
 

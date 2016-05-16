@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainPresenterImpl extends BasePresenterImpl<MainView> implements MainPresenter {
+public class MainPresenterImpl extends BasePresenterImpl<Main.View> implements Main.Presenter {
 
     public static final String TASK_REFRESH = "refresh";
     public static final String TASK_LOAD = "load";
@@ -76,7 +76,7 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 // This callback only gets called if view isn't null, so it's safe to not check for null
-                MainView view = getView();
+                Main.View view = getView();
                 view.showRefreshing(false);
 
                 if (response.isSuccessful()) {
@@ -110,11 +110,11 @@ public class MainPresenterImpl extends BasePresenterImpl<MainView> implements Ma
             @SuppressWarnings("ConstantConditions")
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                MainView view = getView();
-                view.showRefreshing(false);
+
+                getView().showRefreshing(false);
 
                 if (response.isSuccessful()) {
-                    view.setUsers(response.body());
+                    getView().setUsers(response.body());
                 }
                 refreshing = false;
             }

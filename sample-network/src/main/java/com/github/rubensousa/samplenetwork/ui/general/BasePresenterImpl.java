@@ -6,15 +6,14 @@ import android.support.annotation.Nullable;
 
 import com.github.rubensousa.amvp.AbstractPresenterImpl;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import icepick.Icepick;
 
 
-public abstract class BasePresenterImpl<V extends BaseView> extends AbstractPresenterImpl<V>
-        implements BasePresenter<V>, MvpCallback.OnFinishedListener {
+public abstract class BasePresenterImpl<V extends Base.View> extends AbstractPresenterImpl<V>
+        implements Base.Presenter<V>, MvpCallback.OnFinishedListener {
 
     private Map<String, MvpCallback> mMvpCallbacks;
 
@@ -34,7 +33,7 @@ public abstract class BasePresenterImpl<V extends BaseView> extends AbstractPres
 
     @Override
     public void attachView(V view) {
-        boolean alreadyAttached = getView() != null;
+        boolean alreadyAttached = isViewAttached();
         super.attachView(view);
         if (!alreadyAttached) {
             for (MvpCallback callback : mMvpCallbacks.values()) {
@@ -45,7 +44,7 @@ public abstract class BasePresenterImpl<V extends BaseView> extends AbstractPres
 
     @Override
     public void detachView() {
-        boolean alreadyDettached = getView() == null;
+        boolean alreadyDettached = !isViewAttached();
         super.detachView();
         if (!alreadyDettached) {
             for (MvpCallback callback : mMvpCallbacks.values()) {

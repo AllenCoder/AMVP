@@ -13,13 +13,13 @@ public class MvpCallback<T> implements Callback<T> {
     private Call<T> mCall;
     private Response<T> mResponse;
     private Throwable mThrowable;
-    private BaseView mView;
+    private Base.View mView;
     private Callback<T> mCallback;
     private boolean mCallFinished;
     private boolean mCallEnqueued;
     private OnFinishedListener mListener;
 
-    public MvpCallback(BaseView view, Callback<T> callback) {
+    public MvpCallback(Base.View view, Callback<T> callback) {
         mView = view;
         mCallback = callback;
         mCallFinished = false;
@@ -29,7 +29,7 @@ public class MvpCallback<T> implements Callback<T> {
         mListener = listener;
     }
 
-    public void attachView(BaseView view) {
+    public void attachView(Base.View view) {
         mView = view;
         // If there was a response or throwable cached, use the callback now
         if (mCallFinished && mCallback != null && mCall != null) {
