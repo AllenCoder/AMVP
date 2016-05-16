@@ -24,7 +24,7 @@ public interface Presenter<T extends MvpView> {
 
     /**
      * Called right after the presenter is created.
-     * This happens before attachView, so View will be null.
+     * This happens before onViewAttach, so View will be null.
      *
      * @param savedInstanceState Bundle that contains the previous saved state
      */
@@ -39,15 +39,14 @@ public interface Presenter<T extends MvpView> {
      * onActivityResult
      * @param view View to be attached
      */
-    void attachView(T view);
+    void onViewAttach(T view);
 
     /**
-     * Should be called when the fragment or activity is going to be recreated
+     * Should be called when the fragment or activity is going to be paused/destroyed
      * onPause
      * onDestroy
-     * onActivityResult
      */
-    void detachView();
+    void onViewDetach();
 
     /**
      * This is directly tied to fragment's and activity's onSaveInstanceState
@@ -57,7 +56,7 @@ public interface Presenter<T extends MvpView> {
     void onSaveInstanceState(@NonNull Bundle outState);
 
     /**
-     * Called after attachView and when all views have been initialized.
+     * Called after onViewAttach and when all views have been initialized.
      * To avoid NPEs, this should be called from the fragment's onViewStateRestored
      * or activity's onPostCreate
      *

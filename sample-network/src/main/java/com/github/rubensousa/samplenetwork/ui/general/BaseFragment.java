@@ -8,7 +8,7 @@ import com.github.rubensousa.amvp.view.MvpSupportFragment;
 import icepick.Icepick;
 
 
-public abstract class BaseFragment<V extends Base.View<P>, P extends Base.Presenter<V>>
+public abstract class BaseFragment<V extends Base.View<P>, P extends Base.Presenter<V, ?>>
         extends MvpSupportFragment<V, P> implements Base.View<P> {
 
     @Override

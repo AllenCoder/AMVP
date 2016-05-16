@@ -33,11 +33,29 @@ public interface Main {
         void addUsers(ArrayList<User> users);
     }
 
-    interface Presenter extends Base.Presenter<View> {
-
+    interface Presenter extends Base.Presenter<View, Interactor> {
         void refresh();
 
         void load();
+    }
+
+    interface Interactor extends Base.Interactor<Presenter> {
+
+        interface OnRefreshListener {
+            void onRefreshSuccess(ArrayList<User> users);
+
+            void onRefreshError();
+        }
+
+        interface OnLoadListener {
+            void onLoadSuccess(ArrayList<User> users);
+
+            void onLoadError();
+        }
+
+        void refresh(OnRefreshListener listener);
+
+        void load(OnLoadListener loadListener);
     }
 
 }

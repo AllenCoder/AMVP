@@ -31,22 +31,22 @@ public abstract class AbstractPresenterImpl<V extends MvpView> implements Presen
     }
 
     @Override
-    public void attachView(V view) {
+    public void onViewAttach(V view) {
         mView = view;
     }
 
     @Override
-    public void detachView() {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onViewDetach() {
         mView = null;
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
 
     }
 

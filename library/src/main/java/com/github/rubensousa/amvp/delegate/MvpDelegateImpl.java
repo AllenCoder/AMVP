@@ -58,14 +58,14 @@ public class MvpDelegateImpl<V extends MvpView<P>, P extends Presenter<V>> imple
     public void onSaveInstanceState(Bundle outState) {
         if (mPresenter != null) {
             mPresenter.onSaveInstanceState(outState);
-            mPresenter.detachView();
+            mPresenter.onViewDetach();
         }
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         if (mPresenter != null) {
-            mPresenter.attachView(mView);
+            mPresenter.onViewAttach(mView);
             mPresenter.onViewStateRestored(savedInstanceState);
         }
     }
@@ -73,14 +73,14 @@ public class MvpDelegateImpl<V extends MvpView<P>, P extends Presenter<V>> imple
     @Override
     public void attachView() {
         if (mPresenter != null) {
-            mPresenter.attachView(mView);
+            mPresenter.onViewAttach(mView);
         }
     }
 
     @Override
     public void detachView() {
         if (mPresenter != null) {
-            mPresenter.detachView();
+            mPresenter.onViewDetach();
         }
     }
 

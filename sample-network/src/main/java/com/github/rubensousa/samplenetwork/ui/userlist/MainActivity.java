@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
 
     @Override
     public Main.Presenter createPresenter() {
-        return new MainPresenterImpl();
+        return new MainPresenter();
     }
 
     @Override

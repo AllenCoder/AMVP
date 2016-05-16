@@ -17,11 +17,8 @@
 package com.github.rubensousa.samplenetwork.ui.general;
 
 
-import android.support.annotation.Nullable;
-
 import com.github.rubensousa.amvp.MvpView;
 
-import java.util.Map;
 
 public interface Base {
 
@@ -31,17 +28,27 @@ public interface Base {
         void hideProgressDialog();
     }
 
-    interface Presenter<V extends View> extends com.github.rubensousa.amvp.Presenter<V> {
+    interface Presenter<V extends View, I extends Interactor>
+            extends com.github.rubensousa.amvp.Presenter<V> {
+        I createInteractor();
 
-        void attachMvpCallback(String key, MvpCallback mvpCallback);
+        I getInteractor();
+    }
 
-        Map<String, MvpCallback> getMvpCallbacks();
+    interface Interactor<P extends Presenter> {
 
-        @Nullable
-        MvpCallback getMvpCallback(String key);
+        void setViewAttached(boolean attached);
 
-        boolean isTaskFinished(String key);
+        void setPresenter(P presenter);
 
-        boolean isTaskExecuting(String key);
+        P getPresenter();
+
+        void cancelRequest(String key);
+
+        void attachRetrofitRequest(String key, RetrofitRequest request);
+
+        boolean isRequestPending(String key);
+
+        boolean isRequestFinished(String key);
     }
 }
