@@ -74,16 +74,16 @@ public class MainPresenter extends BasePresenter<Main.View, Main.Interactor>
             getView().showRefreshing(true);
         }
 
-        getInteractor().refresh(new Main.Interactor.OnRefreshListener() {
+        getInteractor().refresh(new Main.Interactor.OnLoadListener() {
             @Override
-            public void onRefreshSuccess(ArrayList<User> users) {
+            public void onLoadSuccess(ArrayList<User> users) {
                 refreshing = false;
                 getView().showRefreshing(false);
                 getView().setUsers(users);
             }
 
             @Override
-            public void onRefreshError() {
+            public void onLoadError() {
                 refreshing = false;
                 getView().showRefreshing(false);
             }

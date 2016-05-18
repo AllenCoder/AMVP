@@ -41,19 +41,13 @@ public interface Main {
 
     interface Interactor extends Base.Interactor<Presenter> {
 
-        interface OnRefreshListener {
-            void onRefreshSuccess(ArrayList<User> users);
-
-            void onRefreshError();
-        }
-
         interface OnLoadListener {
             void onLoadSuccess(ArrayList<User> users);
 
             void onLoadError();
         }
 
-        void refresh(OnRefreshListener listener);
+        void refresh(OnLoadListener listener);
 
         void load(OnLoadListener loadListener);
     }

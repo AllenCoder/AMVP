@@ -34,7 +34,6 @@ public class MainInteractor extends BaseInteractor<Main.Presenter> implements Ma
     public static final String TASK_LOAD = "load";
 
     private RetrofitService mService;
-    private OnRefreshListener mRefreshListener;
     private OnLoadListener mLoadListener;
 
     public MainInteractor() {
@@ -42,30 +41,30 @@ public class MainInteractor extends BaseInteractor<Main.Presenter> implements Ma
     }
 
     @Override
-    public void refresh(OnRefreshListener listener) {
+    public void refresh(OnLoadListener listener) {
         if (isRequestPending(TASK_REFRESH)) {
             return;
         }
 
-        mRefreshListener = listener;
+        mLoadListener = listener;
 
         RetrofitRequest<ArrayList<User>> request
                 = new RetrofitRequest<>(new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                if (mRefreshListener != null) {
+                if (mLoadListener != null) {
                     if (response.isSuccessful()) {
-                        mRefreshListener.onRefreshSuccess(response.body());
+                        mLoadListener.onLoadSuccess(response.body());
                     } else {
-                        mRefreshListener.onRefreshError();
+                        mLoadListener.onLoadError();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-                if (mRefreshListener != null) {
-                    mRefreshListener.onRefreshError();
+                if (mLoadListener != null) {
+                    mLoadListener.onLoadError();
                 }
             }
         });
