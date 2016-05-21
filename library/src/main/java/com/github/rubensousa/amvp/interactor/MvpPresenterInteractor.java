@@ -18,9 +18,9 @@ package com.github.rubensousa.amvp.interactor;
 
 
 import com.github.rubensousa.amvp.MvpView;
-import com.github.rubensousa.amvp.Presenter;
+import com.github.rubensousa.amvp.MvpPresenter;
 
-public interface PresenterInteractor<V extends MvpView,I extends Interactor> extends Presenter<V> {
+public interface MvpPresenterInteractor<V extends MvpView,I extends MvpInteractor> extends MvpPresenter<V> {
     I getInteractor();
 
     I createInteractor();

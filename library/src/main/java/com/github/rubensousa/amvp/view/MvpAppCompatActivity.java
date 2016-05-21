@@ -20,13 +20,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
-import com.github.rubensousa.amvp.Presenter;
 import com.github.rubensousa.amvp.delegate.MvpDelegate;
 import com.github.rubensousa.amvp.delegate.MvpDelegateCallbacks;
 import com.github.rubensousa.amvp.delegate.MvpDelegateImpl;
 
-public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends Presenter<V>>
+public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends MvpPresenter<V>>
         extends AppCompatActivity implements MvpView<P>, MvpDelegateCallbacks<V,P> {
 
     private MvpDelegate<V, P> mDelegate;

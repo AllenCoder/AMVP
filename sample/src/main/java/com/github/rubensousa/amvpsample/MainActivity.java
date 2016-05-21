@@ -13,7 +13,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends MvpAppCompatActivity<MainView, MainPresenter> implements MainView {
+public class MainActivity extends MvpAppCompatActivity<Main.View, Main.Presenter> implements Main.View {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -38,7 +38,7 @@ public class MainActivity extends MvpAppCompatActivity<MainView, MainPresenter> 
 
     @Override
     public MainPresenter createPresenter() {
-        return new MainPresenterImpl();
+        return new MainPresenter();
     }
 
     @Override

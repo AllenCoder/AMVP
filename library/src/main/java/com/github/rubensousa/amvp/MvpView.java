@@ -17,7 +17,7 @@
 package com.github.rubensousa.amvp;
 
 
-public interface MvpView<P extends Presenter> {
+public interface MvpView<P extends MvpPresenter> {
 
     /**
      * Get key used to cache the presenter

@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public abstract class AbstractPresenterImpl<V extends MvpView> implements Presenter<V> {
+public abstract class AbstractPresenter<V extends MvpView> implements MvpPresenter<V> {
 
     private V mView;
 

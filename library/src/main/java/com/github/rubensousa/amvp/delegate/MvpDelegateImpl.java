@@ -18,12 +18,12 @@ package com.github.rubensousa.amvp.delegate;
 
 import android.os.Bundle;
 
+import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
-import com.github.rubensousa.amvp.Presenter;
 import com.github.rubensousa.amvp.cache.PresenterCache;
 
 
-public class MvpDelegateImpl<V extends MvpView<P>, P extends Presenter<V>> implements MvpDelegate<V, P> {
+public class MvpDelegateImpl<V extends MvpView<P>, P extends MvpPresenter<V>> implements MvpDelegate<V, P> {
 
     private PresenterCache mPresenterCache;
     private MvpDelegateCallbacks<V, P> mCallbacks;

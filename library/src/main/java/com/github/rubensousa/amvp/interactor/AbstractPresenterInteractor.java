@@ -17,11 +17,11 @@
 package com.github.rubensousa.amvp.interactor;
 
 
-import com.github.rubensousa.amvp.AbstractPresenterImpl;
+import com.github.rubensousa.amvp.AbstractPresenter;
 import com.github.rubensousa.amvp.MvpView;
 
-public abstract class AbstractPresenterInteractor<V extends MvpView, I extends Interactor>
-        extends AbstractPresenterImpl<V> implements PresenterInteractor<V, I> {
+public abstract class AbstractPresenterInteractor<V extends MvpView, I extends MvpInteractor>
+        extends AbstractPresenter<V> implements MvpPresenterInteractor<V, I> {
 
     private I mInteractor;
 

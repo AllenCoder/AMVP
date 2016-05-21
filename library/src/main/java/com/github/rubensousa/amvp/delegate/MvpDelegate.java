@@ -19,10 +19,10 @@ package com.github.rubensousa.amvp.delegate;
 
 import android.os.Bundle;
 
+import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
-import com.github.rubensousa.amvp.Presenter;
 
-public interface MvpDelegate<V extends MvpView<P>, P extends Presenter<V>> {
+public interface MvpDelegate<V extends MvpView<P>, P extends MvpPresenter<V>> {
 
     P onCreate(Bundle savedInstanceState);
 

@@ -22,12 +22,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.github.rubensousa.amvp.MvpView;
-import com.github.rubensousa.amvp.Presenter;
+import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.delegate.MvpDelegate;
 import com.github.rubensousa.amvp.delegate.MvpDelegateCallbacks;
 import com.github.rubensousa.amvp.delegate.MvpDelegateImpl;
 
-public abstract class MvpDialogFragment<V extends MvpView<P>, P extends Presenter<V>>
+public abstract class MvpDialogFragment<V extends MvpView<P>, P extends MvpPresenter<V>>
         extends DialogFragment implements MvpView<P>, MvpDelegateCallbacks<V,P>{
 
     private MvpDelegate<V, P> mDelegate;

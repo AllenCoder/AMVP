@@ -21,7 +21,7 @@ package com.github.rubensousa.amvp.interactor;
  * An Interactor should be used to decouple business logic from the Presenter.
  * @param <P> Presenter to be attached to the Interactor
  */
-public interface Interactor<P extends PresenterInteractor> {
+public interface MvpInteractor<P extends MvpPresenterInteractor> {
 
     P getPresenter();
 

@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp.delegate;
+package com.github.rubensousa.amvpsample;
 
 
 import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
 
-public interface MvpDelegateCallbacks<V extends MvpView<P>, P extends MvpPresenter<V>> {
+public interface Main {
 
-    P createPresenter();
+    interface View extends MvpView<Presenter> {
 
-    V getMvpView();
+        void showText(String text);
+    }
+
+    interface Presenter extends MvpPresenter<View> {
+        void generateNumber();
+    }
 }

@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public interface Presenter<V extends MvpView> {
+public interface MvpPresenter<V extends MvpView> {
 
     /**
      * Called right after the presenter is created.

@@ -21,14 +21,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 
+import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
-import com.github.rubensousa.amvp.Presenter;
 import com.github.rubensousa.amvp.delegate.MvpDelegate;
 import com.github.rubensousa.amvp.delegate.MvpDelegateCallbacks;
 import com.github.rubensousa.amvp.delegate.MvpDelegateImpl;
 
 
-public abstract class MvpBottomSheetDialogFragment<V extends MvpView<P>, P extends Presenter<V>>
+public abstract class MvpBottomSheetDialogFragment<V extends MvpView<P>, P extends MvpPresenter<V>>
         extends BottomSheetDialogFragment implements MvpView<P>, MvpDelegateCallbacks<V, P> {
 
     private MvpDelegate<V, P> mDelegate;

@@ -19,7 +19,7 @@ package com.github.rubensousa.amvp.cache;
 
 import android.support.annotation.Nullable;
 
-import com.github.rubensousa.amvp.Presenter;
+import com.github.rubensousa.amvp.MvpPresenter;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class PresenterCache {
 
     private static PresenterCache sPresenterCache;
 
-    private Map<String, Presenter<?>> mCache;
+    private Map<String, MvpPresenter<?>> mCache;
 
     protected PresenterCache() {
         mCache = new LinkedHashMap<>();
@@ -43,8 +43,8 @@ public class PresenterCache {
         return sPresenterCache;
     }
 
-    public synchronized void cache(String key, Presenter<?> presenter) {
-        Presenter old = mCache.put(key, presenter);
+    public synchronized void cache(String key, MvpPresenter<?> presenter) {
+        MvpPresenter old = mCache.put(key, presenter);
         if (old != null && old != presenter) {
             old.onDestroy();
         }
@@ -56,7 +56,7 @@ public class PresenterCache {
 
     public synchronized void remove(String key, boolean destroy) {
 
-        Presenter presenter = mCache.remove(key);
+        MvpPresenter presenter = mCache.remove(key);
 
         if (destroy && presenter != null) {
             presenter.onDestroy();
@@ -65,8 +65,8 @@ public class PresenterCache {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public <P extends Presenter<?>> P get(String key) {
-        Presenter presenter = mCache.get(key);
+    public <P extends MvpPresenter<?>> P get(String key) {
+        MvpPresenter presenter = mCache.get(key);
 
         if (presenter == null) {
             return null;
@@ -81,7 +81,7 @@ public class PresenterCache {
 
     public synchronized void clear(boolean destroy) {
         if (destroy) {
-            for (Presenter p : mCache.values()) {
+            for (MvpPresenter p : mCache.values()) {
                 p.onDestroy();
             }
         }

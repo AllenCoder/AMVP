@@ -17,7 +17,7 @@
 package com.github.rubensousa.amvp.interactor;
 
 
-public abstract class AbstractInteractor<P extends PresenterInteractor> implements Interactor<P> {
+public abstract class AbstractInteractor<P extends MvpPresenterInteractor> implements MvpInteractor<P> {
 
     private P mPresenter;
 

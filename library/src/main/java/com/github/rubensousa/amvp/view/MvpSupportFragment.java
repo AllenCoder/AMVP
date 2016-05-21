@@ -20,14 +20,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
+import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
-import com.github.rubensousa.amvp.Presenter;
 import com.github.rubensousa.amvp.delegate.MvpDelegate;
 import com.github.rubensousa.amvp.delegate.MvpDelegateCallbacks;
 import com.github.rubensousa.amvp.delegate.MvpDelegateImpl;
 
 
-public abstract class MvpSupportFragment<V extends MvpView<P>, P extends Presenter<V>> extends Fragment
+public abstract class MvpSupportFragment<V extends MvpView<P>, P extends MvpPresenter<V>> extends Fragment
         implements MvpView<P>,MvpDelegateCallbacks<V,P> {
 
     private MvpDelegate<V, P> mDelegate;

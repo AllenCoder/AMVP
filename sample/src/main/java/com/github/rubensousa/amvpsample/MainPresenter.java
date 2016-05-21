@@ -1,8 +1,24 @@
 package com.github.rubensousa.amvpsample;
 
-import com.github.rubensousa.amvp.Presenter;
+import com.github.rubensousa.amvp.AbstractPresenter;
+
+import java.util.Random;
 
 
-public interface MainPresenter extends Presenter<MainView> {
-    void generateNumber();
+public class MainPresenter extends AbstractPresenter<Main.View> implements Main.Presenter {
+
+
+    private Random mRandom;
+
+    public MainPresenter() {
+        mRandom = new Random();
+    }
+
+    @Override
+    public void generateNumber() {
+        if (getView() != null) {
+            getView().showText((mRandom.nextInt(10) + 1) + "");
+        }
+    }
+
 }

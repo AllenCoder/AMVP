@@ -14,83 +14,129 @@ Please, check the sample projects.
 Add the following to your build.gradle:
 
 ```groovy
-    repositories{
-        maven { url "https://jitpack.io" }
-    }
-    
-    dependencies {
-        compile 'com.github.rubensousa:AMVP:1.1'
-    }
+repositories{
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile 'com.github.rubensousa:AMVP:1.1'
+}
 ```
 
 ## How to use
 
-1. Create your CustomView interface:
+1. Create your interfaces:
 
 ```java
-    public interface CustomView extends MvpView<CustomPresenter>{
-    
-    }
-```
+public interface Custom {
 
-2. Create your CustomPresenter interface:
+   interface View<P extends Presenter> extends MvpView<P> {
 
-```java
-    public interface CustomPresenter extends Presenter<CustomView>{
-    
-    }
-```
-
-3. Extend your activity from MvpAppCompatActivity or MvpActivity:
-
-```java
-    public class MainActivity extends MvpAppCompatActivity<CustomView, CustomPresenter> implements CustomView {
-    
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-        }
+   }
    
-        @Override
-        public CustomPresenter createPresenter() {
-            return new CustomPresenterImpl();
-        }
-    }
-```
-        
-4. Or your fragment from MvpFragment or MvpSupportFragment:
-
-```java
-    public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
-  
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return super.onCreateView(inflater, container, savedInstanceState);
-        }
+   interface Presenter<V extends View> extends MvpPresenter<V>{
    
-        @Override
-        public CustomPresenter createPresenter() {
-            return new CustomPresenterImpl();
-        }
-    }
+   }
+
+}
 ```
-        
-5. Use getPresenter() in your View to get a reference to the current Presenter.
+
+2. Extend your activity from MvpAppCompatActivity or MvpActivity:
 
 ```java
-    public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
-  
-        ...
-        
-        public void onClick(){
-            getPresenter().doSomething();
-        }
+public class MainActivity extends MvpAppCompatActivity<Custom.View, Custom.Presenter> implements Custom.View {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
+
+    @Override
+    public CustomPresenter createPresenter() {
+        return new CustomPresenterImpl();
+    }
+}
+```
+        
+Or your fragment from MvpFragment or MvpSupportFragment:
+
+```java
+public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public CustomPresenter createPresenter() {
+        return new CustomPresenterImpl();
+    }
+}
+```
+        
+3. Use getPresenter() in your View to get a reference to the current Presenter.
+
+```java
+public class MainFragment extends MvpSupportFragment<Custom.View, Custom.Presenter> implements CustomView {
+
+    ...
+    
+    public void onClick(){
+        getPresenter().doSomething();
+    }
+}
 ```
 
-6. (Optional) Extend your CustomPresenterImpl from AbstractPresenterImpl to avoid having to implement all of Presenter's methods each time.
+4. (Optional) Extend your CustomPresenterImpl from AbstractPresenter to avoid having to implement all of Presenter's methods each time.
+
+5. (Optional) Create a Interactor. (Extend your Presenter from MvpPresenterInteractor instead)
+
+```java
+public interface Custom {
+
+    interface Presenter<V extends View, I extends Interactor> extends MvpPresenterInteractor<V, I> {
+
+    }
+
+    interface Interactor<P extends Presenter> extends MvpInteractor<P> {
+
+    }
+}
+```
+
+And then, in your Presenter (that extends from AbstractPresenterInteractor):
+
+```java
+public class CustomPresenter extends AbstractPresenterInteractor<Custom.View, Custom.Interactor>
+        implements Custom.Presenter{
+
+    @Override
+    public Custom.Interactor createInteractor() {
+        return new CustomInteractor();
+    }
+    
+    @Override
+    public void getData() {
+
+        if(isViewAttached()){
+            getView().showProgress();
+        }
+        
+        getInteractor().load(new LoadListener{
+            
+            @Override
+            public void onLoad(){
+                if(isViewAttached()){
+                    getView().hideProgress();
+                }
+            }
+        });
+    }
+    
+```
         
         
 That's it. Presenter's creation, caching and destruction gets handled automatically for you.
@@ -98,7 +144,7 @@ That's it. Presenter's creation, caching and destruction gets handled automatica
 ## Notes:
 
 1. Override getPresenterKey() in your View to change the default key used to cache the presenter.
-2. Only use the Presenter after onPostCreate() or onViewStateRestored()
+2. Only use the Presenter after onPostCreate() or onViewStateRestored(), since the view won't be attached yet.
 3. Initialize the Presenter's state on onCreate(Bundle savedInstanceState)
 
 
@@ -109,7 +155,7 @@ In this sample, you can find an example on how to persist network tasks.
 
 The github public API is used to fetch users data: https://developer.github.com/v3/users/#get-all-users
 
-The key is in the class MvpCallback, that receives life cycle events from the Presenter.
+This is solved by caching the network response while the view isn't attached. After the view is attached, the network response is then delivered.
 
 
 ## Sample dependencies
