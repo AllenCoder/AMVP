@@ -18,6 +18,8 @@ package com.github.rubensousa.samplenetwork.ui.general;
 
 
 import com.github.rubensousa.amvp.MvpView;
+import com.github.rubensousa.amvp.interactor.PresenterInteractor;
+import com.github.rubensousa.samplenetwork.network.NetworkRequest;
 
 
 public interface Base {
@@ -28,24 +30,17 @@ public interface Base {
         void hideProgressDialog();
     }
 
-    interface Presenter<V extends View, I extends Interactor>
-            extends com.github.rubensousa.amvp.Presenter<V> {
-        I createInteractor();
+    interface Presenter<V extends View, I extends Interactor> extends PresenterInteractor<V, I> {
 
-        I getInteractor();
     }
 
-    interface Interactor<P extends Presenter> {
+    interface Interactor<P extends Presenter> extends com.github.rubensousa.amvp.interactor.Interactor<P> {
 
         void setViewAttached(boolean attached);
 
-        void setPresenter(P presenter);
-
-        P getPresenter();
-
         void cancelRequest(String key);
 
-        void attachRetrofitRequest(String key, RetrofitRequest request);
+        void attachNetworkRequest(String key, NetworkRequest request);
 
         boolean isRequestPending(String key);
 

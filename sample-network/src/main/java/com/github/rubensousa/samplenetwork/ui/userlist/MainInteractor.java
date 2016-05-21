@@ -20,7 +20,7 @@ import com.github.rubensousa.samplenetwork.model.User;
 import com.github.rubensousa.samplenetwork.network.RetrofitModule;
 import com.github.rubensousa.samplenetwork.network.RetrofitService;
 import com.github.rubensousa.samplenetwork.ui.general.BaseInteractor;
-import com.github.rubensousa.samplenetwork.ui.general.RetrofitRequest;
+import com.github.rubensousa.samplenetwork.network.RetrofitRequest;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class MainInteractor extends BaseInteractor<Main.Presenter> implements Ma
         mLoadListener = listener;
 
         RetrofitRequest<ArrayList<User>> request
-                = new RetrofitRequest<>(new Callback<ArrayList<User>>() {
+                = new RetrofitRequest<>(mService.getUsers(0), new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 if (mLoadListener != null) {
@@ -69,8 +69,8 @@ public class MainInteractor extends BaseInteractor<Main.Presenter> implements Ma
             }
         });
 
-        attachRetrofitRequest(TASK_REFRESH, request);
-        request.start(mService.getUsers(0));
+        attachNetworkRequest(TASK_REFRESH, request);
+        request.start();
     }
 
     @Override
@@ -82,7 +82,7 @@ public class MainInteractor extends BaseInteractor<Main.Presenter> implements Ma
         mLoadListener = loadListener;
 
         RetrofitRequest<ArrayList<User>> request
-                = new RetrofitRequest<>(new Callback<ArrayList<User>>() {
+                = new RetrofitRequest<>(mService.getUsers(0), new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 if (mLoadListener != null) {
@@ -102,7 +102,7 @@ public class MainInteractor extends BaseInteractor<Main.Presenter> implements Ma
             }
         });
 
-        attachRetrofitRequest(TASK_LOAD, request);
-        request.start(mService.getUsers(0));
+        attachNetworkRequest(TASK_LOAD, request);
+        request.start();
     }
 }

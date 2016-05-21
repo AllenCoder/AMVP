@@ -17,14 +17,16 @@
 package com.github.rubensousa.samplenetwork.ui.general;
 
 
+import com.github.rubensousa.amvp.interactor.AbstractInteractor;
+import com.github.rubensousa.samplenetwork.network.NetworkRequest;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class BaseInteractor<P extends Base.Presenter> implements Base.Interactor<P>,
-        RetrofitRequest.OnFinishedListener {
+public abstract class BaseInteractor<P extends Base.Presenter> extends AbstractInteractor<P>
+        implements Base.Interactor<P>, NetworkRequest.OnFinishedListener {
 
-    private Map<String, RetrofitRequest> mRequests;
-    private P mPresenter;
+    private Map<String, NetworkRequest> mRequests;
     private boolean mViewAttached;
 
     public BaseInteractor() {
@@ -32,40 +34,30 @@ public abstract class BaseInteractor<P extends Base.Presenter> implements Base.I
     }
 
     @Override
-    public P getPresenter() {
-        return mPresenter;
-    }
-
-    @Override
-    public void setPresenter(P presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void setViewAttached(boolean attached) {
         if (mViewAttached == attached) {
             return;
         }
-        mViewAttached = true;
-        for (RetrofitRequest request : mRequests.values()) {
+        mViewAttached = attached;
+        for (NetworkRequest request : mRequests.values()) {
             request.setViewAttached(mViewAttached);
         }
     }
 
     @Override
     public void cancelRequest(String key) {
-        RetrofitRequest request = mRequests.get(key);
+        NetworkRequest request = mRequests.get(key);
         if (request != null) {
             request.cancel();
         }
     }
 
     @Override
-    public void attachRetrofitRequest(String key, RetrofitRequest request) {
+    public void attachNetworkRequest(String key, NetworkRequest request) {
         request.setViewAttached(true);
         request.setKey(key);
         request.setOnFinishedListener(this);
-        RetrofitRequest old = mRequests.put(key, request);
+        NetworkRequest old = mRequests.put(key, request);
         if (old != null) {
             old.cancel();
         }
@@ -73,18 +65,18 @@ public abstract class BaseInteractor<P extends Base.Presenter> implements Base.I
 
     @Override
     public boolean isRequestPending(String key) {
-        RetrofitRequest request = mRequests.get(key);
-        return request != null && request.isEnqueued();
+        NetworkRequest request = mRequests.get(key);
+        return request != null && request.isExecuting();
     }
 
     @Override
     public boolean isRequestFinished(String key) {
-        RetrofitRequest request = mRequests.get(key);
+        NetworkRequest request = mRequests.get(key);
         return request != null && request.isFinished();
     }
 
     @Override
-    public void onFinished(RetrofitRequest request) {
+    public void onFinished(NetworkRequest request) {
         synchronized (this) {
             mRequests.remove(request.getKey());
         }
