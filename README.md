@@ -25,7 +25,7 @@ dependencies {
 
 ## How to use
 
-1. Create your interfaces:
+##### 1. Create your interfaces:
 
 ```java
 public interface Custom {
@@ -41,7 +41,7 @@ public interface Custom {
 }
 ```
 
-2. Extend your activity from MvpAppCompatActivity or MvpActivity:
+##### 2. Extend your activity from MvpAppCompatActivity or MvpActivity:
 
 ```java
 public class MainActivity extends MvpAppCompatActivity<Custom.View, Custom.Presenter> implements Custom.View {
@@ -77,7 +77,7 @@ public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter
 }
 ```
         
-3. Use getPresenter() in your View to get a reference to the current Presenter.
+##### 3. Use getPresenter() in your View to get a reference to the current Presenter.
 
 ```java
 public class MainFragment extends MvpSupportFragment<Custom.View, Custom.Presenter> implements CustomView {
@@ -90,9 +90,9 @@ public class MainFragment extends MvpSupportFragment<Custom.View, Custom.Present
 }
 ```
 
-4. (Optional) Extend your CustomPresenterImpl from AbstractPresenter to avoid having to implement all of Presenter's methods each time.
+##### 4. (Optional) Extend your CustomPresenter from AbstractPresenter to avoid having to implement all of Presenter's methods each time.
 
-5. (Optional) Create a Interactor. (Extend your Presenter from MvpPresenterInteractor instead)
+##### 5. (Optional) Create a Interactor. (Extend your Presenter from MvpPresenterInteractor instead)
 
 ```java
 public interface Custom {
