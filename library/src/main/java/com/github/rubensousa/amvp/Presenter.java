@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public interface Presenter<T extends MvpView> {
+public interface Presenter<V extends MvpView> {
 
     /**
      * Called right after the presenter is created.
@@ -39,7 +39,7 @@ public interface Presenter<T extends MvpView> {
      * onActivityResult
      * @param view View to be attached
      */
-    void onViewAttach(T view);
+    void onViewAttach(V view);
 
     /**
      * Should be called when the fragment or activity is going to be paused/destroyed
@@ -70,6 +70,9 @@ public interface Presenter<T extends MvpView> {
      */
     void onDestroy();
 
+    /**
+     * @return View attached to Presenter
+     */
     @Nullable
-    T getView();
+    V getView();
 }

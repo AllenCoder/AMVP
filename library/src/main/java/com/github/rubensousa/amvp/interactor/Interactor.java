@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp;
+package com.github.rubensousa.amvp.interactor;
 
 
-public interface MvpView<P extends Presenter> {
+/**
+ * An Interactor should be used to decouple business logic from the Presenter.
+ * @param <P> Presenter to be attached to the Interactor
+ */
+public interface Interactor<P extends PresenterInteractor> {
 
-    /**
-     * Get key used to cache the presenter
-     * @return A string key that identifies the Presenter
-     */
-    String getPresenterKey();
-
-    /**
-     * @return The Presenter associated to this View
-     */
     P getPresenter();
 
+    void setPresenter(P presenter);
+
     /**
-     * Create the Presenter for this View.
-     * <p>
-     * This is called on onCreate in Activities/Fragments if a Presenter wasn't found in the cache
-     * @return Presenter created
+     * Called when the presenter is destroyed
+     * May be useful to cancel any pending tasks
      */
-    P createPresenter();
+    void onDestroy();
 }

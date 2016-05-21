@@ -14,27 +14,14 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp;
+package com.github.rubensousa.amvp.interactor;
 
 
-public interface MvpView<P extends Presenter> {
+import com.github.rubensousa.amvp.MvpView;
+import com.github.rubensousa.amvp.Presenter;
 
-    /**
-     * Get key used to cache the presenter
-     * @return A string key that identifies the Presenter
-     */
-    String getPresenterKey();
+public interface PresenterInteractor<V extends MvpView,I extends Interactor> extends Presenter<V> {
+    I getInteractor();
 
-    /**
-     * @return The Presenter associated to this View
-     */
-    P getPresenter();
-
-    /**
-     * Create the Presenter for this View.
-     * <p>
-     * This is called on onCreate in Activities/Fragments if a Presenter wasn't found in the cache
-     * @return Presenter created
-     */
-    P createPresenter();
+    I createInteractor();
 }
