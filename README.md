@@ -53,8 +53,8 @@ public class MainActivity extends MvpAppCompatActivity<Custom.View, Custom.Prese
     }
 
     @Override
-    public CustomPresenter createPresenter() {
-        return new CustomPresenterImpl();
+    public Custom.Presenter createPresenter() {
+        return new CustomPresenter();
     }
 }
 ```
@@ -62,7 +62,7 @@ public class MainActivity extends MvpAppCompatActivity<Custom.View, Custom.Prese
 Or your fragment from MvpFragment or MvpSupportFragment:
 
 ```java
-public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter> implements CustomView {
+public class MainFragment extends MvpSupportFragment<Custom.View, Custom.Presenter> implements Custom.View {
 
     @Nullable
     @Override
@@ -71,8 +71,8 @@ public class MainFragment extends MvpSupportFragment<CustomView, CustomPresenter
     }
 
     @Override
-    public CustomPresenter createPresenter() {
-        return new CustomPresenterImpl();
+    public Custom.Presenter createPresenter() {
+        return new CustomPresenter();
     }
 }
 ```
@@ -125,7 +125,7 @@ public class CustomPresenter extends AbstractPresenterInteractor<Custom.View, Cu
             getView().showProgress();
         }
         
-        getInteractor().load(new LoadListener{
+        getInteractor().load(new LoadListener() {
             
             @Override
             public void onLoad(){
