@@ -18,16 +18,20 @@ package com.github.rubensousa.amvp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
+import com.github.rubensousa.amvp.cache.PresenterCache;
 import com.github.rubensousa.amvp.delegate.MvpDelegate;
 import com.github.rubensousa.amvp.delegate.MvpDelegateCallbacks;
 import com.github.rubensousa.amvp.delegate.MvpDelegateImpl;
 
+import java.util.List;
+
 public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends MvpPresenter<V>>
-        extends AppCompatActivity implements MvpView<P>, MvpDelegateCallbacks<V,P> {
+        extends AppCompatActivity implements MvpView<P>, MvpDelegateCallbacks<V, P> {
 
     private MvpDelegate<V, P> mDelegate;
     private P mPresenter;
@@ -88,6 +92,17 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends MvpPr
     @Override
     public void finish() {
         mDelegate.destroyPresenter();
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        // Destroy child fragments presenters
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment instanceof MvpSupportFragment) {
+                    PresenterCache.getInstance()
+                            .remove(((MvpSupportFragment) fragment).getPresenterKey());
+
+                }
+            }
+        }
         super.finish();
     }
 
