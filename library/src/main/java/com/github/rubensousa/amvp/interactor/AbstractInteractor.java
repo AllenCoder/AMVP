@@ -17,19 +17,7 @@
 package com.github.rubensousa.amvp.interactor;
 
 
-public abstract class AbstractInteractor<P extends MvpPresenterInteractor> implements MvpInteractor<P> {
-
-    private P mPresenter;
-
-    @Override
-    public P getPresenter() {
-        return mPresenter;
-    }
-
-    @Override
-    public void setPresenter(P presenter) {
-        mPresenter = presenter;
-    }
+public abstract class AbstractInteractor implements MvpInteractor {
 
     @Override
     public void onDestroy() {

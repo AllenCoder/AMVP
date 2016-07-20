@@ -28,19 +28,11 @@ public abstract class AbstractPresenterInteractor<V extends MvpView, I extends M
     @SuppressWarnings("unchecked")
     public AbstractPresenterInteractor() {
         mInteractor = createInteractor();
-        if (mInteractor != null) {
-            mInteractor.setPresenter(this);
-        }
     }
 
     @Override
     public I getInteractor() {
         return mInteractor;
-    }
-
-    @Override
-    public I createInteractor() {
-        return null;
     }
 
     @Override
