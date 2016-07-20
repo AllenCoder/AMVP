@@ -101,7 +101,7 @@ public interface Custom {
 
     }
 
-    interface Interactor<P extends Presenter> extends MvpInteractor<P> {
+    interface Interactor extends MvpInteractor {
 
     }
 }
