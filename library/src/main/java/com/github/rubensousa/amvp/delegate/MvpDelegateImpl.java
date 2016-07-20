@@ -58,28 +58,32 @@ public class MvpDelegateImpl<V extends MvpView<P>, P extends MvpPresenter<V>> im
     public void onSaveInstanceState(Bundle outState) {
         if (mPresenter != null) {
             mPresenter.onSaveInstanceState(outState);
-            mPresenter.onViewDetach();
+            if (mPresenter.isViewAttached()) {
+                mPresenter.onViewDetach();
+            }
         }
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         if (mPresenter != null) {
-            mPresenter.onViewAttach(mView);
+            if (!mPresenter.isViewAttached()) {
+                mPresenter.onViewAttach(mView);
+            }
             mPresenter.onViewStateRestored(savedInstanceState);
         }
     }
 
     @Override
     public void attachView() {
-        if (mPresenter != null) {
+        if (mPresenter != null && !mPresenter.isViewAttached()) {
             mPresenter.onViewAttach(mView);
         }
     }
 
     @Override
     public void detachView() {
-        if (mPresenter != null) {
+        if (mPresenter != null && mPresenter.isViewAttached()) {
             mPresenter.onViewDetach();
         }
     }

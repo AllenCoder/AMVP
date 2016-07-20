@@ -61,6 +61,7 @@ public abstract class AbstractPresenter<V extends MvpView> implements MvpPresent
         return mView;
     }
 
+    @Override
     public boolean isViewAttached() {
         return mView != null;
     }

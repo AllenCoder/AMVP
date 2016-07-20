@@ -57,7 +57,7 @@ public interface MvpPresenter<V extends MvpView> {
 
     /**
      * Called after onViewAttach and when all views have been initialized.
-     * To avoid NPEs, this should be called from the fragment's onViewStateRestored
+     * To avoid NPEs due to null views, this should be called from the fragment's onViewStateRestored
      * or activity's onPostCreate
      *
      * @param savedInstanceState Previous saved state
@@ -69,6 +69,9 @@ public interface MvpPresenter<V extends MvpView> {
      * It's directly tied to the activity onBackPressed and finish methods
      */
     void onDestroy();
+
+
+    boolean isViewAttached();
 
     /**
      * @return View attached to Presenter

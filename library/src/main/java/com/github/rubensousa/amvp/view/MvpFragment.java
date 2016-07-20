@@ -53,7 +53,6 @@ public abstract class MvpFragment<V extends MvpView<P>, P extends MvpPresenter<V
         mDelegate.onViewStateRestored(savedInstanceState);
     }
 
-
     /**
      * Since onDestroy() isn't guaranteed to be called,
      * we check if the current activity is finishing

@@ -35,9 +35,6 @@ public abstract class BaseInteractor extends AbstractInteractor
 
     @Override
     public void setViewAttached(boolean attached) {
-        if (mViewAttached == attached) {
-            return;
-        }
         mViewAttached = attached;
         for (NetworkRequest request : mRequests.values()) {
             request.setViewAttached(mViewAttached);
