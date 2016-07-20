@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainInteractor extends BaseInteractor<Main.Presenter> implements Main.Interactor {
+public class MainInteractor extends BaseInteractor implements Main.Interactor {
 
     public static final String TASK_REFRESH = "refresh";
     public static final String TASK_LOAD = "load";

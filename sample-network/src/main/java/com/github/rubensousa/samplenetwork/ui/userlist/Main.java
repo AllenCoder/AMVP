@@ -39,7 +39,7 @@ public interface Main {
         void load();
     }
 
-    interface Interactor extends Base.Interactor<Presenter> {
+    interface Interactor extends Base.Interactor {
 
         interface OnLoadListener {
             void onLoadSuccess(ArrayList<User> users);

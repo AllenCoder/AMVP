@@ -23,8 +23,8 @@ import com.github.rubensousa.samplenetwork.network.NetworkRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class BaseInteractor<P extends Base.Presenter> extends AbstractInteractor<P>
-        implements Base.Interactor<P>, NetworkRequest.OnFinishedListener {
+public abstract class BaseInteractor extends AbstractInteractor
+        implements Base.Interactor, NetworkRequest.OnFinishedListener {
 
     private Map<String, NetworkRequest> mRequests;
     private boolean mViewAttached;

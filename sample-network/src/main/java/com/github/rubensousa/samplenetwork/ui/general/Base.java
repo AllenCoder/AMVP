@@ -35,7 +35,7 @@ public interface Base {
 
     }
 
-    interface Interactor<P extends Presenter> extends MvpInteractor<P> {
+    interface Interactor extends MvpInteractor {
 
         void setViewAttached(boolean attached);
 
