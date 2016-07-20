@@ -25,7 +25,6 @@ public abstract class AbstractPresenterInteractor<V extends MvpView, I extends M
 
     private I mInteractor;
 
-    @SuppressWarnings("unchecked")
     public AbstractPresenterInteractor() {
         mInteractor = createInteractor();
     }
