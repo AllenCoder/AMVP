@@ -35,6 +35,11 @@ public abstract class AbstractPresenterInteractor<V extends MvpView, I extends M
     }
 
     @Override
+    public void setInteractor(I interactor) {
+        mInteractor = interactor;
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mInteractor != null) {

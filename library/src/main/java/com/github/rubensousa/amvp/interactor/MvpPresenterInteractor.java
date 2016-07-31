@@ -23,5 +23,7 @@ import com.github.rubensousa.amvp.MvpPresenter;
 public interface MvpPresenterInteractor<V extends MvpView,I extends MvpInteractor> extends MvpPresenter<V> {
     I getInteractor();
 
+    void setInteractor(I interactor);
+
     I createInteractor();
 }
