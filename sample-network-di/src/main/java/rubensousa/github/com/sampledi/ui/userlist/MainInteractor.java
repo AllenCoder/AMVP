@@ -54,20 +54,16 @@ public class MainInteractor extends BaseInteractor implements Main.Interactor {
                 = new RetrofitRequest<>(mService.getUsers(0), new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                if (mLoadListener != null) {
-                    if (response.isSuccessful()) {
-                        mLoadListener.onLoadSuccess(response.body());
-                    } else {
-                        mLoadListener.onLoadError();
-                    }
+                if (response.isSuccessful()) {
+                    mLoadListener.onLoadSuccess(response.body());
+                } else {
+                    mLoadListener.onLoadError();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-                if (mLoadListener != null) {
-                    mLoadListener.onLoadError();
-                }
+                mLoadListener.onLoadError();
             }
         });
 
@@ -87,24 +83,23 @@ public class MainInteractor extends BaseInteractor implements Main.Interactor {
                 = new RetrofitRequest<>(mService.getUsers(0), new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                if (mLoadListener != null) {
-                    if (response.isSuccessful()) {
-                        mLoadListener.onLoadSuccess(response.body());
-                    } else {
-                        mLoadListener.onLoadError();
-                    }
+                if (response.isSuccessful()) {
+                    mLoadListener.onLoadSuccess(response.body());
+                } else {
+                    mLoadListener.onLoadError();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-                if (mLoadListener != null) {
-                    mLoadListener.onLoadError();
-                }
+
+                mLoadListener.onLoadError();
+
             }
         });
 
         attachNetworkRequest(TASK_LOAD, request);
+
         request.start();
     }
 }

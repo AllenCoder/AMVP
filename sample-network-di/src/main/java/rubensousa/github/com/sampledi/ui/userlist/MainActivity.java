@@ -61,6 +61,14 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // If you want to use the member variable instead of getPresenter(),
+        // you need to this to make sure you don't get a null presenter.
+        // This is due to the variable being set only on createPresenter.
+        // If the presenter is found in the cache, createPresenter won't be called
+        // and you'll have a null mPresenter. If you use getPresenter() instead, you don't need this.
+        // mPresenter = getPresenter();
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         toolbar.setTitle(R.string.app_name);
