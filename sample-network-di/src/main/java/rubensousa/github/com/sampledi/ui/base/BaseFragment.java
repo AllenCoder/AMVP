@@ -27,9 +27,10 @@ import com.github.rubensousa.amvp.view.MvpSupportFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import icepick.Icepick;
+import rubensousa.github.com.sampledi.App;
 
 
-public abstract class BaseFragment<V extends Base.View<P>, P extends Base.Presenter<V, ?>>
+public abstract class BaseFragment<V extends Base.View<P>, P extends Base.Presenter<V>>
         extends MvpSupportFragment<V, P> implements Base.View<P> {
 
     private Unbinder mUnbinder;
@@ -40,7 +41,13 @@ public abstract class BaseFragment<V extends Base.View<P>, P extends Base.Presen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutId(), container, false);
+        int layoutId = getLayoutId();
+
+        if (layoutId != 0) {
+            return inflater.inflate(getLayoutId(), container, false);
+        }
+
+        return null;
     }
 
     @Override
@@ -78,5 +85,4 @@ public abstract class BaseFragment<V extends Base.View<P>, P extends Base.Presen
     public void hideProgressDialog() {
 
     }
-
 }

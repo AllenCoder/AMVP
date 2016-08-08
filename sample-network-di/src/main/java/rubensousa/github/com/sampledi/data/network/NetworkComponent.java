@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.api;
+package rubensousa.github.com.sampledi.data.network;
 
 
-import java.util.ArrayList;
+import javax.inject.Singleton;
 
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import rubensousa.github.com.sampledi.data.model.User;
+import dagger.Component;
+import retrofit2.Retrofit;
 
-public interface RetrofitService {
-
+@Singleton
+@Component(modules = NetworkModule.class)
+public interface NetworkComponent {
     String BASE_URL = "https://api.github.com";
-    String USERS = "users";
-    String USERS_SINCE = "since";
 
-    @GET(USERS)
-    Call<ArrayList<User>> getUsers(@Query(USERS_SINCE) int since);
+    Retrofit retrofit();
 }
-

@@ -23,12 +23,15 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import icepick.State;
+import rubensousa.github.com.sampledi.App;
 import rubensousa.github.com.sampledi.data.model.User;
+import rubensousa.github.com.sampledi.ui.base.Base;
 import rubensousa.github.com.sampledi.ui.base.BasePresenter;
 
-public class MainPresenter extends BasePresenter<Main.View, Main.Interactor>
-        implements Main.Presenter{
+public class MainPresenter extends BasePresenter<Main.View> implements Main.Presenter {
 
     @State
     boolean loading;
@@ -36,17 +39,12 @@ public class MainPresenter extends BasePresenter<Main.View, Main.Interactor>
     @State
     boolean refreshing;
 
-    @Override
-    public Main.Interactor createInteractor() {
-        return new MainInteractor();
-    }
+    private Main.Interactor mInteractor;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            // onViewStateRestored will be called after
-            loading = true;
-        }
+    @Inject
+    public MainPresenter(Main.Interactor interactor){
+        super(interactor);
+        mInteractor = interactor;
     }
 
     @Override
@@ -65,7 +63,7 @@ public class MainPresenter extends BasePresenter<Main.View, Main.Interactor>
             getView().showRefreshing(true);
         }
 
-        getInteractor().load(new Main.Interactor.OnLoadListener() {
+        mInteractor.load(new Main.Interactor.OnLoadListener() {
             @Override
             public void onLoadSuccess(ArrayList<User> users) {
                 loading = false;
@@ -89,7 +87,7 @@ public class MainPresenter extends BasePresenter<Main.View, Main.Interactor>
             getView().showRefreshing(true);
         }
 
-        getInteractor().refresh(new Main.Interactor.OnLoadListener() {
+        mInteractor.refresh(new Main.Interactor.OnLoadListener() {
             @Override
             public void onLoadSuccess(ArrayList<User> users) {
                 refreshing = false;

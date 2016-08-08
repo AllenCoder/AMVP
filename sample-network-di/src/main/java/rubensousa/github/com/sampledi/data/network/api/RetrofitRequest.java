@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.api;
+package rubensousa.github.com.sampledi.data.network.api;
 
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rubensousa.github.com.sampledi.data.network.NetworkRequest;
 
 public class RetrofitRequest<T> extends NetworkRequest<T, Throwable> implements Callback<T> {
 

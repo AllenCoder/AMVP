@@ -27,8 +27,12 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import icepick.State;
+import rubensousa.github.com.sampledi.App;
 import rubensousa.github.com.sampledi.R;
 import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.ui.base.BaseActivity;
@@ -45,6 +49,12 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @State
+    boolean mLoaded;
+
+    @Inject
+    Main.Presenter mPresenter;
 
     private UserAdapter mAdapter;
 
@@ -71,6 +81,14 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (!mLoaded) {
+            getPresenter().load();
+        }
+    }
+
+    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mAdapter.restoreState(savedInstanceState);
@@ -87,12 +105,14 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
 
     @Override
     public Main.Presenter createPresenter() {
-        return new MainPresenter();
+        ((App) getApplication()).getPresenterComponent().inject(this);
+        return mPresenter;
     }
 
     @Override
     public void setUsers(ArrayList<User> users) {
         mAdapter.setUsers(users);
+        mLoaded = true;
     }
 
     @Override

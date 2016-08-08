@@ -22,8 +22,9 @@ import android.os.Bundle;
 import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
 
 import icepick.Icepick;
+import rubensousa.github.com.sampledi.App;
 
-public abstract class BaseActivity<V extends Base.View<P>, P extends Base.Presenter<V,?>>
+public abstract class BaseActivity<V extends Base.View<P>, P extends Base.Presenter<V>>
         extends MvpAppCompatActivity<V, P> implements Base.View<P> {
 
     private ProgressDialog mProgressDialog;
@@ -51,4 +52,5 @@ public abstract class BaseActivity<V extends Base.View<P>, P extends Base.Presen
             mProgressDialog.dismiss();
         }
     }
+
 }

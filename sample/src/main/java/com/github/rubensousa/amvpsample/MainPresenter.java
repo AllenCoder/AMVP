@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class MainPresenter extends AbstractPresenter<Main.View> implements Main.Presenter {
 
-
     private Random mRandom;
 
     public MainPresenter() {
@@ -16,7 +15,7 @@ public class MainPresenter extends AbstractPresenter<Main.View> implements Main.
 
     @Override
     public void generateNumber() {
-        if (getView() != null) {
+        if (getView() != null) { //isViewAttached() doesn't suppress the warning
             getView().showText((mRandom.nextInt(10) + 1) + "");
         }
     }

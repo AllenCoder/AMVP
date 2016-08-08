@@ -17,11 +17,13 @@
 package rubensousa.github.com.sampledi.ui.base;
 
 
+import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.MvpView;
 import com.github.rubensousa.amvp.interactor.MvpInteractor;
 import com.github.rubensousa.amvp.interactor.MvpPresenterInteractor;
 
-import rubensousa.github.com.sampledi.data.api.NetworkRequest;
+import rubensousa.github.com.sampledi.data.network.NetworkRequest;
+import rubensousa.github.com.sampledi.ui.userlist.Main;
 
 
 public interface Base {
@@ -32,7 +34,7 @@ public interface Base {
         void hideProgressDialog();
     }
 
-    interface Presenter<V extends View, I extends Interactor> extends MvpPresenterInteractor<V, I> {
+    interface Presenter<V extends View> extends MvpPresenter<V> {
 
     }
 

@@ -18,17 +18,15 @@ package rubensousa.github.com.sampledi.ui.base;
 
 
 import com.github.rubensousa.amvp.interactor.AbstractInteractor;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import rubensousa.github.com.sampledi.data.api.NetworkRequest;
+import rubensousa.github.com.sampledi.data.network.NetworkRequest;
 
 public abstract class BaseInteractor extends AbstractInteractor
         implements Base.Interactor, NetworkRequest.OnFinishedListener {
 
     private Map<String, NetworkRequest> mRequests;
-    private boolean mViewAttached;
 
     public BaseInteractor() {
         mRequests = new LinkedHashMap<>();
@@ -36,9 +34,8 @@ public abstract class BaseInteractor extends AbstractInteractor
 
     @Override
     public void setViewAttached(boolean attached) {
-        mViewAttached = attached;
         for (NetworkRequest request : mRequests.values()) {
-            request.setViewAttached(mViewAttached);
+            request.setViewAttached(attached);
         }
     }
 

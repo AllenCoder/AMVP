@@ -25,7 +25,6 @@ import rubensousa.github.com.sampledi.ui.base.Base;
 public interface Main {
 
     interface View extends Base.View<Presenter> {
-
         void showRefreshing(boolean refreshing);
 
         void setUsers(ArrayList<User> users);
@@ -33,7 +32,7 @@ public interface Main {
         void addUsers(ArrayList<User> users);
     }
 
-    interface Presenter extends Base.Presenter<View, Interactor> {
+    interface Presenter extends Base.Presenter<View> {
         void refresh();
 
         void load();

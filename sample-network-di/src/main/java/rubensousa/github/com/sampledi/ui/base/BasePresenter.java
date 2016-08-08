@@ -20,27 +20,34 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.github.rubensousa.amvp.interactor.AbstractPresenterInteractor;
+import com.github.rubensousa.amvp.AbstractPresenter;
 
 import icepick.Icepick;
 
 
-public abstract class BasePresenter<V extends Base.View, I extends Base.Interactor>
-        extends AbstractPresenterInteractor<V, I> implements Base.Presenter<V, I> {
+public abstract class BasePresenter<V extends Base.View> extends AbstractPresenter<V>
+        implements Base.Presenter<V> {
+
+
+    private Base.Interactor mInteractor;
+
+    public BasePresenter(Base.Interactor interactor) {
+        mInteractor = interactor;
+    }
 
     @Override
     public void onViewAttach(V view) {
         super.onViewAttach(view);
-        if (getInteractor() != null) {
-            getInteractor().setViewAttached(true);
+        if (mInteractor != null) {
+            mInteractor.setViewAttached(true);
         }
     }
 
     @Override
     public void onViewDetach() {
         super.onViewDetach();
-        if (getInteractor() != null) {
-            getInteractor().setViewAttached(false);
+        if (mInteractor != null) {
+            mInteractor.setViewAttached(false);
         }
     }
 
@@ -60,5 +67,13 @@ public abstract class BasePresenter<V extends Base.View, I extends Base.Interact
     @Override
     public V getView() {
         return super.getView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mInteractor != null) {
+            mInteractor.onDestroy();
+        }
     }
 }

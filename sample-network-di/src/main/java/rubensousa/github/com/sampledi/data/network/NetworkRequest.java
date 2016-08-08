@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.api;
+package rubensousa.github.com.sampledi.data.network;
 
 
 public abstract class NetworkRequest<T, E> {

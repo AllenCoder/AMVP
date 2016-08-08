@@ -17,15 +17,15 @@
 package rubensousa.github.com.sampledi.ui.userlist;
 
 
-
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rubensousa.github.com.sampledi.data.api.RetrofitModule;
-import rubensousa.github.com.sampledi.data.api.RetrofitRequest;
-import rubensousa.github.com.sampledi.data.api.RetrofitService;
+import rubensousa.github.com.sampledi.data.network.api.RetrofitRequest;
+import rubensousa.github.com.sampledi.data.network.api.user.GithubUserService;
 import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.ui.base.BaseInteractor;
 
@@ -34,11 +34,12 @@ public class MainInteractor extends BaseInteractor implements Main.Interactor {
     public static final String TASK_REFRESH = "refresh";
     public static final String TASK_LOAD = "load";
 
-    private RetrofitService mService;
+    private GithubUserService mService;
     private OnLoadListener mLoadListener;
 
-    public MainInteractor() {
-        mService = RetrofitModule.getService();
+    @Inject
+    public MainInteractor(GithubUserService service) {
+        mService = service;
     }
 
     @Override
