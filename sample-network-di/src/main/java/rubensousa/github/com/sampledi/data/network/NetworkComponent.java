@@ -17,15 +17,7 @@
 package rubensousa.github.com.sampledi.data.network;
 
 
-import javax.inject.Singleton;
 
-import dagger.Component;
-import retrofit2.Retrofit;
-
-@Singleton
-@Component(modules = NetworkModule.class)
 public interface NetworkComponent {
-    String BASE_URL = "https://api.github.com";
 
-    Retrofit retrofit();
 }

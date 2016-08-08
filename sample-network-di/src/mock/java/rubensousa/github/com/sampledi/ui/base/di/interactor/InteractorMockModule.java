@@ -14,25 +14,22 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi;
+package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
-import android.app.Application;
 
-import rubensousa.github.com.sampledi.ui.base.di.FlavorComponent;
-import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
+import dagger.Module;
+import dagger.Provides;
+import rubensousa.github.com.sampledi.data.network.api.GithubUserService;
+import rubensousa.github.com.sampledi.ui.userlist.Main;
+import rubensousa.github.com.sampledi.ui.userlist.MainInteractorMock;
 
-public class App extends Application {
+@Module
+public class InteractorMockModule {
 
-    private PresenterComponent mPresenterComponent;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mPresenterComponent = FlavorComponent.createPresenterComponent();
-    }
-
-    public PresenterComponent getPresenterComponent() {
-        return mPresenterComponent;
+    @InteractorScope
+    @Provides
+    public Main.Interactor getMainInteractor(GithubUserService service) {
+        return new MainInteractorMock(service);
     }
 
 }

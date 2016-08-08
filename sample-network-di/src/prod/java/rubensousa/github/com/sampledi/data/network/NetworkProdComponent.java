@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.di.presenter;
+package rubensousa.github.com.sampledi.data.network;
 
 
-import dagger.Module;
-import dagger.Provides;
-import rubensousa.github.com.sampledi.ui.userlist.Main;
-import rubensousa.github.com.sampledi.ui.userlist.MainPresenter;
+import javax.inject.Singleton;
 
-@Module
-public class PresenterModule {
+import dagger.Component;
+import retrofit2.Retrofit;
 
-    @PresenterScope
-    @Provides
-    public Main.Presenter getMainPresenter(Main.Interactor interactor) {
-        return new MainPresenter(interactor);
-    }
+@Singleton
+@Component(modules = NetworkProdModule.class)
+public interface NetworkProdComponent extends NetworkComponent {
+    String BASE_URL = "https://api.github.com";
 
+    Retrofit retrofit();
 }

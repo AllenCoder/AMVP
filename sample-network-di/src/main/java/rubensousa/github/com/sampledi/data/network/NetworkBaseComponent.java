@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.di.interactor;
+package rubensousa.github.com.sampledi.data.network;
 
-import javax.inject.Scope;
 
-@Scope
-public @interface InteractorScope {
+import javax.inject.Singleton;
+
+import dagger.Component;
+import retrofit2.Retrofit;
+
+@Singleton
+@Component(modules = NetworkModule.class)
+public interface NetworkBaseComponent extends NetworkComponent {
+    String BASE_URL = "https://api.github.com";
+
+    Retrofit retrofit();
 }

@@ -21,7 +21,6 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 import rubensousa.github.com.sampledi.data.network.ActivityScope;
-import rubensousa.github.com.sampledi.data.network.api.user.GithubUserService;
 
 @Module
 public class GithubModule {

@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.di.interactor;
+package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
+import javax.inject.Scope;
 
-import dagger.Module;
-import dagger.Provides;
-import rubensousa.github.com.sampledi.data.network.api.user.GithubUserService;
-import rubensousa.github.com.sampledi.ui.userlist.Main;
-import rubensousa.github.com.sampledi.ui.userlist.MainInteractor;
-
-@Module
-public class InteractorModule {
-
-    @InteractorScope
-    @Provides
-    public Main.Interactor getMainInteractor(GithubUserService service) {
-        return new MainInteractor(service);
-    }
-
+@Scope
+public @interface InteractorScope {
 }

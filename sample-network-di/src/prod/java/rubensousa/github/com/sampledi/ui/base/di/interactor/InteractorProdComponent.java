@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.di.interactor;
+package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
 
 import dagger.Component;
-import rubensousa.github.com.sampledi.data.network.api.GithubComponent;
-import rubensousa.github.com.sampledi.ui.userlist.Main;
+import rubensousa.github.com.sampledi.data.network.api.GithubProdComponent;
 
 @InteractorScope
-@Component(dependencies = GithubComponent.class, modules = InteractorModule.class)
-public interface InteractorComponent {
-    Main.Interactor getMainInteractor();
+@Component(dependencies = GithubProdComponent.class, modules = InteractorModule.class)
+public interface InteractorProdComponent extends InteractorComponent {
+
 }

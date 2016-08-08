@@ -17,13 +17,6 @@
 package rubensousa.github.com.sampledi.data.network.api;
 
 
-import dagger.Component;
-import rubensousa.github.com.sampledi.data.network.ActivityScope;
-import rubensousa.github.com.sampledi.data.network.NetworkComponent;
-import rubensousa.github.com.sampledi.data.network.api.user.GithubUserService;
-
-@ActivityScope
-@Component(dependencies = NetworkComponent.class, modules = GithubModule.class)
 public interface GithubComponent {
     GithubUserService getUserService();
 }

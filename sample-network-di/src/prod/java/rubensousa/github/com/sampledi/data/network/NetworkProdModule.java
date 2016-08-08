@@ -30,11 +30,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class NetworkModule {
+public class NetworkProdModule {
 
     String mBaseUrl;
 
-    public NetworkModule(String baseUrl) {
+    public NetworkProdModule(String baseUrl) {
         mBaseUrl = baseUrl;
     }
 

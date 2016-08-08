@@ -14,25 +14,15 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi;
+package rubensousa.github.com.sampledi.data.network.api;
 
-import android.app.Application;
 
-import rubensousa.github.com.sampledi.ui.base.di.FlavorComponent;
-import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
+import dagger.Component;
+import rubensousa.github.com.sampledi.data.network.ActivityScope;
+import rubensousa.github.com.sampledi.data.network.NetworkBaseComponent;
 
-public class App extends Application {
-
-    private PresenterComponent mPresenterComponent;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mPresenterComponent = FlavorComponent.createPresenterComponent();
-    }
-
-    public PresenterComponent getPresenterComponent() {
-        return mPresenterComponent;
-    }
+@ActivityScope
+@Component(dependencies = NetworkBaseComponent.class, modules = GithubModule.class)
+public interface GithubBaseComponent extends GithubComponent{
 
 }

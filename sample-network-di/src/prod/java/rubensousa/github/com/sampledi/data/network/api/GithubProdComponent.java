@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.network.api.user;
+package rubensousa.github.com.sampledi.data.network.api;
 
 
-import java.util.ArrayList;
+import dagger.Component;
+import rubensousa.github.com.sampledi.data.network.ActivityScope;
+import rubensousa.github.com.sampledi.data.network.NetworkProdComponent;
 
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import rubensousa.github.com.sampledi.data.model.User;
+@ActivityScope
+@Component(dependencies = NetworkProdComponent.class, modules = GithubModule.class)
+public interface GithubProdComponent extends GithubComponent {
 
-public interface GithubUserService {
-
-    String USERS = "users";
-    String USERS_SINCE = "since";
-
-    @GET(USERS)
-    Call<ArrayList<User>> getUsers(@Query(USERS_SINCE) int since);
 }
-

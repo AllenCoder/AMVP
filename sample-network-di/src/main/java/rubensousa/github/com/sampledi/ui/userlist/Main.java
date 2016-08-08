@@ -28,8 +28,6 @@ public interface Main {
         void showRefreshing(boolean refreshing);
 
         void setUsers(ArrayList<User> users);
-
-        void addUsers(ArrayList<User> users);
     }
 
     interface Presenter extends Base.Presenter<View> {

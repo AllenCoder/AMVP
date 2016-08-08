@@ -14,25 +14,12 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi;
+package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
-import android.app.Application;
 
-import rubensousa.github.com.sampledi.ui.base.di.FlavorComponent;
-import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
+import rubensousa.github.com.sampledi.ui.userlist.Main;
 
-public class App extends Application {
 
-    private PresenterComponent mPresenterComponent;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mPresenterComponent = FlavorComponent.createPresenterComponent();
-    }
-
-    public PresenterComponent getPresenterComponent() {
-        return mPresenterComponent;
-    }
-
+public interface InteractorComponent {
+    Main.Interactor getMainInteractor();
 }

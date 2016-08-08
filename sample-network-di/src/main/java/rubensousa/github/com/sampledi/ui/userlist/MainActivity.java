@@ -124,11 +124,6 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
     }
 
     @Override
-    public void addUsers(ArrayList<User> users) {
-        mAdapter.addUsers(users);
-    }
-
-    @Override
     public void showRefreshing(final boolean refreshing) {
         swipeRefreshLayout.post(new Runnable() {
             @Override

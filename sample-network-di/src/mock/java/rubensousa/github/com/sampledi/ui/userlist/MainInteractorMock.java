@@ -29,7 +29,7 @@ import rubensousa.github.com.sampledi.data.network.api.GithubUserService;
 import rubensousa.github.com.sampledi.data.network.api.RetrofitRequest;
 import rubensousa.github.com.sampledi.ui.base.BaseInteractor;
 
-public class MainInteractor extends BaseInteractor implements Main.Interactor {
+public class MainInteractorMock extends BaseInteractor implements Main.Interactor {
 
     public static final String TASK_REFRESH = "refresh";
     public static final String TASK_LOAD = "load";
@@ -38,7 +38,7 @@ public class MainInteractor extends BaseInteractor implements Main.Interactor {
     private OnLoadListener mLoadListener;
 
     @Inject
-    public MainInteractor(GithubUserService service) {
+    public MainInteractorMock(GithubUserService service) {
         mService = service;
     }
 

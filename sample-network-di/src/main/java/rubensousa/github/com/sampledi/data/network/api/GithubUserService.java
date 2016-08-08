@@ -14,10 +14,22 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.data.di.presenter;
+package rubensousa.github.com.sampledi.data.network.api;
 
-import javax.inject.Scope;
 
-@Scope
-public @interface PresenterScope {
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+import rubensousa.github.com.sampledi.data.model.User;
+
+public interface GithubUserService {
+
+    String USERS = "users";
+    String USERS_SINCE = "since";
+
+    @GET(USERS)
+    Call<ArrayList<User>> getUsers(@Query(USERS_SINCE) int since);
 }
+
