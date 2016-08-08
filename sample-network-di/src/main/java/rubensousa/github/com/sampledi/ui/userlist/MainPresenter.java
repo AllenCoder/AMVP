@@ -26,9 +26,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import icepick.State;
-import rubensousa.github.com.sampledi.App;
 import rubensousa.github.com.sampledi.data.model.User;
-import rubensousa.github.com.sampledi.ui.base.Base;
 import rubensousa.github.com.sampledi.ui.base.BasePresenter;
 
 public class MainPresenter extends BasePresenter<Main.View> implements Main.Presenter {

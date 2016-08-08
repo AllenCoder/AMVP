@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.ui.base.di.presenter;
+package rubensousa.github.com.sampledi.data.di.presenter;
 
-import javax.inject.Scope;
 
-@Scope
-public @interface PresenterScope {
+import dagger.Module;
+import dagger.Provides;
+import rubensousa.github.com.sampledi.ui.userlist.Main;
+import rubensousa.github.com.sampledi.ui.userlist.MainPresenter;
+
+@Module
+public class PresenterModule {
+
+    @PresenterScope
+    @Provides
+    public Main.Presenter getMainPresenter(Main.Interactor interactor) {
+        return new MainPresenter(interactor);
+    }
+
 }

@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.ui.base.di.presenter;
+package rubensousa.github.com.sampledi.data.di.presenter;
 
+import javax.inject.Scope;
 
-import dagger.Component;
-import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorComponent;
-import rubensousa.github.com.sampledi.ui.userlist.MainActivity;
-
-
-@PresenterScope
-@Component(dependencies = InteractorComponent.class, modules = PresenterModule.class)
-public interface PresenterComponent {
-    void inject(MainActivity activity);
-    //void inject(Fragment fragment);
+@Scope
+public @interface PresenterScope {
 }

@@ -18,15 +18,15 @@ package rubensousa.github.com.sampledi;
 
 import android.app.Application;
 
+import rubensousa.github.com.sampledi.data.di.interactor.InteractorComponent;
 import rubensousa.github.com.sampledi.data.network.DaggerNetworkComponent;
 import rubensousa.github.com.sampledi.data.network.NetworkComponent;
 import rubensousa.github.com.sampledi.data.network.NetworkModule;
 import rubensousa.github.com.sampledi.data.network.api.DaggerGithubComponent;
 import rubensousa.github.com.sampledi.data.network.api.GithubComponent;
-import rubensousa.github.com.sampledi.ui.base.di.interactor.DaggerInteractorComponent;
-import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorComponent;
-import rubensousa.github.com.sampledi.ui.base.di.presenter.DaggerPresenterComponent;
-import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
+import rubensousa.github.com.sampledi.data.di.interactor.DaggerInteractorComponent;
+import rubensousa.github.com.sampledi.data.di.presenter.DaggerPresenterComponent;
+import rubensousa.github.com.sampledi.data.di.presenter.PresenterComponent;
 
 
 public class App extends Application {
@@ -60,18 +60,6 @@ public class App extends Application {
 
     public PresenterComponent getPresenterComponent() {
         return mPresenterComponent;
-    }
-
-    public static InteractorComponent getInteractorComponent() {
-        return sInteractorComponent;
-    }
-
-    public static NetworkComponent getNetworkComponent() {
-        return sNetworkComponent;
-    }
-
-    public static GithubComponent getGithubComponent() {
-        return sGithubComponent;
     }
 
 }

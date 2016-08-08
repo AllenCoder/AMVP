@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.ui.base.di.presenter;
+package rubensousa.github.com.sampledi.data.di.presenter;
 
 
-import dagger.Module;
-import dagger.Provides;
-import rubensousa.github.com.sampledi.ui.userlist.Main;
-import rubensousa.github.com.sampledi.ui.userlist.MainPresenter;
+import dagger.Component;
+import rubensousa.github.com.sampledi.data.di.interactor.InteractorComponent;
+import rubensousa.github.com.sampledi.ui.userlist.MainActivity;
 
-@Module
-public class PresenterModule {
 
-    @PresenterScope
-    @Provides
-    public Main.Presenter getMainPresenter(Main.Interactor interactor) {
-        return new MainPresenter(interactor);
-    }
-
+@PresenterScope
+@Component(dependencies = InteractorComponent.class, modules = PresenterModule.class)
+public interface PresenterComponent {
+    void inject(MainActivity activity);
+    //void inject(Fragment fragment);
 }

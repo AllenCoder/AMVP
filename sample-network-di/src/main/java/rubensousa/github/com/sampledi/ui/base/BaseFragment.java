@@ -27,7 +27,6 @@ import com.github.rubensousa.amvp.view.MvpSupportFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import icepick.Icepick;
-import rubensousa.github.com.sampledi.App;
 
 
 public abstract class BaseFragment<V extends Base.View<P>, P extends Base.Presenter<V>>

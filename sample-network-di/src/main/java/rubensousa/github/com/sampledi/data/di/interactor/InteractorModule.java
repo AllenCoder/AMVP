@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.ui.base.di.interactor;
+package rubensousa.github.com.sampledi.data.di.interactor;
 
 
 import dagger.Module;
 import dagger.Provides;
 import rubensousa.github.com.sampledi.data.network.api.user.GithubUserService;
-import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterScope;
 import rubensousa.github.com.sampledi.ui.userlist.Main;
 import rubensousa.github.com.sampledi.ui.userlist.MainInteractor;
 
