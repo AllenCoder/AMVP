@@ -18,10 +18,10 @@ package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
 
 import dagger.Component;
-import rubensousa.github.com.sampledi.data.network.api.GithubProdComponent;
+import rubensousa.github.com.sampledi.data.network.api.GithubBaseComponent;
 
 @InteractorScope
-@Component(dependencies = GithubProdComponent.class, modules = InteractorModule.class)
+@Component(dependencies = GithubBaseComponent.class, modules = InteractorModule.class)
 public interface InteractorProdComponent extends InteractorComponent {
 
 }

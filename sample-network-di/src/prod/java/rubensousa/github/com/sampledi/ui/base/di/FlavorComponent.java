@@ -17,29 +17,29 @@
 package rubensousa.github.com.sampledi.ui.base.di;
 
 
-import rubensousa.github.com.sampledi.data.network.DaggerNetworkProdComponent;
-import rubensousa.github.com.sampledi.data.network.api.DaggerGithubProdComponent;
+import rubensousa.github.com.sampledi.data.network.DaggerNetworkBaseComponent;
+import rubensousa.github.com.sampledi.data.network.NetworkBaseComponent;
+import rubensousa.github.com.sampledi.data.network.NetworkModule;
+import rubensousa.github.com.sampledi.data.network.api.DaggerGithubBaseComponent;
+import rubensousa.github.com.sampledi.data.network.api.GithubBaseComponent;
 import rubensousa.github.com.sampledi.ui.base.di.interactor.DaggerInteractorProdComponent;
 import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorProdComponent;
 import rubensousa.github.com.sampledi.ui.base.di.presenter.DaggerPresenterProdComponent;
 import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterProdComponent;
-import rubensousa.github.com.sampledi.data.network.NetworkProdComponent;
-import rubensousa.github.com.sampledi.data.network.NetworkProdModule;
-import rubensousa.github.com.sampledi.data.network.api.GithubProdComponent;
 
 public class FlavorComponent {
 
     public static PresenterProdComponent createPresenterComponent() {
-        NetworkProdComponent networkComponent = DaggerNetworkProdComponent.builder()
-                .networkProdModule(new NetworkProdModule(NetworkProdComponent.BASE_URL))
+        NetworkBaseComponent networkComponent = DaggerNetworkBaseComponent.builder()
+                .networkModule(new NetworkModule(NetworkBaseComponent.BASE_URL))
                 .build();
 
-        GithubProdComponent githubComponent = DaggerGithubProdComponent.builder()
-                .networkProdComponent(networkComponent)
+        GithubBaseComponent githubComponent = DaggerGithubBaseComponent.builder()
+                .networkBaseComponent(networkComponent)
                 .build();
 
         InteractorProdComponent interactorComponent = DaggerInteractorProdComponent.builder()
-                .githubProdComponent(githubComponent)
+                .githubBaseComponent(githubComponent)
                 .build();
 
         return DaggerPresenterProdComponent.builder()
