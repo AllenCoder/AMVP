@@ -18,7 +18,6 @@ package com.github.rubensousa.amvp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 
 import com.github.rubensousa.amvp.MvpPresenter;
@@ -47,9 +46,10 @@ public abstract class MvpBottomSheetDialogFragment<V extends MvpView<P>, P exten
         mDelegate.onSaveInstanceState(outState);
     }
 
+    // onViewStateRestored isn't called for dialogs if a view isn't returned on onCreateView
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mDelegate.onViewStateRestored(savedInstanceState);
     }
 

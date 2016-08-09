@@ -19,7 +19,6 @@ package com.github.rubensousa.amvp.view;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.github.rubensousa.amvp.MvpView;
 import com.github.rubensousa.amvp.MvpPresenter;
@@ -46,12 +45,12 @@ public abstract class MvpDialogFragment<V extends MvpView<P>, P extends MvpPrese
         mDelegate.onSaveInstanceState(outState);
     }
 
+    // onViewStateRestored isn't called for dialogs if a view isn't returned on onCreateView
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mDelegate.onViewStateRestored(savedInstanceState);
     }
-
 
     /**
      * Since onDestroy() isn't guaranteed to be called,
