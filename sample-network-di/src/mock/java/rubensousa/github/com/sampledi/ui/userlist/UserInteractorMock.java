@@ -20,7 +20,7 @@ package rubensousa.github.com.sampledi.ui.userlist;
 import rubensousa.github.com.sampledi.ui.base.BaseInteractor;
 import rubensousa.github.com.sampledi.utils.MockUtils;
 
-public class MainInteractorMock extends BaseInteractor implements Main.Interactor {
+public class UserInteractorMock extends BaseInteractor implements UserContract.Interactor {
 
     @Override
     public void refresh(OnLoadListener listener) {

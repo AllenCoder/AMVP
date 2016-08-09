@@ -36,9 +36,8 @@ import rubensousa.github.com.sampledi.App;
 import rubensousa.github.com.sampledi.R;
 import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.ui.base.BaseActivity;
-import rubensousa.github.com.sampledi.ui.userlist.adapter.UserAdapter;
 
-public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implements Main.View,
+public class UserActivity extends BaseActivity<UserContract.View, UserContract.Presenter> implements UserContract.View,
         SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
     @BindView(R.id.recyclerView)
@@ -54,7 +53,7 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
     boolean mLoaded;
 
     @Inject
-    Main.Presenter mPresenter;
+    UserContract.Presenter mPresenter;
 
     private UserAdapter mAdapter;
 
@@ -112,7 +111,7 @@ public class MainActivity extends BaseActivity<Main.View, Main.Presenter> implem
     }
 
     @Override
-    public Main.Presenter createPresenter() {
+    public UserContract.Presenter createPresenter() {
         ((App) getApplication()).getPresenterComponent().inject(this);
         return mPresenter;
     }

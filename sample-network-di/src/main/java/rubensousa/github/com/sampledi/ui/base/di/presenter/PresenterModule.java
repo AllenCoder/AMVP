@@ -19,16 +19,16 @@ package rubensousa.github.com.sampledi.ui.base.di.presenter;
 
 import dagger.Module;
 import dagger.Provides;
-import rubensousa.github.com.sampledi.ui.userlist.Main;
-import rubensousa.github.com.sampledi.ui.userlist.MainPresenter;
+import rubensousa.github.com.sampledi.ui.userlist.UserContract;
+import rubensousa.github.com.sampledi.ui.userlist.UserPresenter;
 
 @Module
 public class PresenterModule {
 
     @PresenterScope
     @Provides
-    public Main.Presenter getMainPresenter(Main.Interactor interactor) {
-        return new MainPresenter(interactor);
+    public UserContract.Presenter getMainPresenter(UserContract.Interactor interactor) {
+        return new UserPresenter(interactor);
     }
 
 }

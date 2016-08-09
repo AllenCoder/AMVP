@@ -19,17 +19,16 @@ package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
 import dagger.Module;
 import dagger.Provides;
-import rubensousa.github.com.sampledi.data.network.api.GithubUserService;
-import rubensousa.github.com.sampledi.ui.userlist.Main;
-import rubensousa.github.com.sampledi.ui.userlist.MainInteractorMock;
+import rubensousa.github.com.sampledi.ui.userlist.UserContract;
+import rubensousa.github.com.sampledi.ui.userlist.UserInteractorMock;
 
 @Module
 public class InteractorMockModule {
 
     @InteractorScope
     @Provides
-    public Main.Interactor getMainInteractor() {
-        return new MainInteractorMock();
+    public UserContract.Interactor getMainInteractor() {
+        return new UserInteractorMock();
     }
 
 }

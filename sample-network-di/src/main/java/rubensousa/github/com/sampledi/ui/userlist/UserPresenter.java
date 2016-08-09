@@ -29,7 +29,7 @@ import icepick.State;
 import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.ui.base.BasePresenter;
 
-public class MainPresenter extends BasePresenter<Main.View> implements Main.Presenter {
+public class UserPresenter extends BasePresenter<UserContract.View> implements UserContract.Presenter {
 
     @State
     boolean loading;
@@ -37,10 +37,10 @@ public class MainPresenter extends BasePresenter<Main.View> implements Main.Pres
     @State
     boolean refreshing;
 
-    private Main.Interactor mInteractor;
+    private UserContract.Interactor mInteractor;
 
     @Inject
-    public MainPresenter(Main.Interactor interactor){
+    public UserPresenter(UserContract.Interactor interactor){
         super(interactor);
         mInteractor = interactor;
     }
@@ -61,7 +61,7 @@ public class MainPresenter extends BasePresenter<Main.View> implements Main.Pres
             getView().showRefreshing(true);
         }
 
-        mInteractor.load(new Main.Interactor.OnLoadListener() {
+        mInteractor.load(new UserContract.Interactor.OnLoadListener() {
             @Override
             public void onLoadSuccess(ArrayList<User> users) {
                 loading = false;
@@ -85,7 +85,7 @@ public class MainPresenter extends BasePresenter<Main.View> implements Main.Pres
             getView().showRefreshing(true);
         }
 
-        mInteractor.refresh(new Main.Interactor.OnLoadListener() {
+        mInteractor.refresh(new UserContract.Interactor.OnLoadListener() {
             @Override
             public void onLoadSuccess(ArrayList<User> users) {
                 refreshing = false;

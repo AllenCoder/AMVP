@@ -19,7 +19,6 @@ package rubensousa.github.com.sampledi.ui.base.di.presenter;
 
 import dagger.Component;
 import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorProdComponent;
-import rubensousa.github.com.sampledi.ui.userlist.MainActivity;
 
 
 @PresenterScope

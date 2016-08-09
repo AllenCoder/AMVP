@@ -17,9 +17,9 @@
 package rubensousa.github.com.sampledi.ui.base.di.presenter;
 
 
-import rubensousa.github.com.sampledi.ui.userlist.MainActivity;
+import rubensousa.github.com.sampledi.ui.userlist.UserActivity;
 
 public interface PresenterComponent {
-    void inject(MainActivity activity);
+    void inject(UserActivity activity);
     //void inject(Fragment fragment);
 }

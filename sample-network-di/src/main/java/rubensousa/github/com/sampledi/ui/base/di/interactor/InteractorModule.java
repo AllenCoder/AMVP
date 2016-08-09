@@ -20,16 +20,16 @@ package rubensousa.github.com.sampledi.ui.base.di.interactor;
 import dagger.Module;
 import dagger.Provides;
 import rubensousa.github.com.sampledi.data.network.api.GithubUserService;
-import rubensousa.github.com.sampledi.ui.userlist.Main;
-import rubensousa.github.com.sampledi.ui.userlist.MainInteractor;
+import rubensousa.github.com.sampledi.ui.userlist.UserContract;
+import rubensousa.github.com.sampledi.ui.userlist.UserInteractor;
 
 @Module
 public class InteractorModule {
 
     @InteractorScope
     @Provides
-    public Main.Interactor getMainInteractor(GithubUserService service) {
-        return new MainInteractor(service);
+    public UserContract.Interactor getMainInteractor(GithubUserService service) {
+        return new UserInteractor(service);
     }
 
 }

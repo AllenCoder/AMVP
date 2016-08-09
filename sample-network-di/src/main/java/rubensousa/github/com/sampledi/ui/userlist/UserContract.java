@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.ui.base.Base;
 
-public interface Main {
+public interface UserContract {
 
     interface View extends Base.View<Presenter> {
         void showRefreshing(boolean refreshing);

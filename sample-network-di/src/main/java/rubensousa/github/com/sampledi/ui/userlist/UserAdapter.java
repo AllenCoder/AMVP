@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package rubensousa.github.com.sampledi.ui.userlist.adapter;
+package rubensousa.github.com.sampledi.ui.userlist;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
