@@ -19,7 +19,7 @@ repositories{
 }
 
 dependencies {
-    compile 'com.github.rubensousa:AMVP:1.3.0'
+    compile 'com.github.rubensousa:AMVP:1.3.1'
 }
 ```
 
