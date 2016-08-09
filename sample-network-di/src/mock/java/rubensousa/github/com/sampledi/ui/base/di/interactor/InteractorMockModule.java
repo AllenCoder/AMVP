@@ -28,8 +28,8 @@ public class InteractorMockModule {
 
     @InteractorScope
     @Provides
-    public Main.Interactor getMainInteractor(GithubUserService service) {
-        return new MainInteractorMock(service);
+    public Main.Interactor getMainInteractor() {
+        return new MainInteractorMock();
     }
 
 }

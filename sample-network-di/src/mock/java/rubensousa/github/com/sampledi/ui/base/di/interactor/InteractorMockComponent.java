@@ -18,10 +18,9 @@ package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
 
 import dagger.Component;
-import rubensousa.github.com.sampledi.data.network.api.GithubComponent;
 
 @InteractorScope
-@Component(dependencies = GithubComponent.class, modules = InteractorMockModule.class)
+@Component(modules = InteractorMockModule.class)
 public interface InteractorMockComponent extends InteractorComponent {
 
 }

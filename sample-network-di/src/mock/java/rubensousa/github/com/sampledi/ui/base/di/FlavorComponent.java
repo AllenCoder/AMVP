@@ -17,29 +17,16 @@
 package rubensousa.github.com.sampledi.ui.base.di;
 
 
-import rubensousa.github.com.sampledi.data.network.DaggerNetworkBaseComponent;
-import rubensousa.github.com.sampledi.data.network.api.DaggerGithubBaseComponent;
 import rubensousa.github.com.sampledi.ui.base.di.interactor.DaggerInteractorMockComponent;
 import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorComponent;
 import rubensousa.github.com.sampledi.ui.base.di.presenter.DaggerPresenterBaseComponent;
 import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
-import rubensousa.github.com.sampledi.data.network.NetworkBaseComponent;
-import rubensousa.github.com.sampledi.data.network.NetworkModule;
-import rubensousa.github.com.sampledi.data.network.api.GithubBaseComponent;
 
 public class FlavorComponent {
 
     public static PresenterComponent createPresenterComponent() {
-        NetworkBaseComponent networkComponent = DaggerNetworkBaseComponent.builder()
-                .networkModule(new NetworkModule(NetworkBaseComponent.BASE_URL))
-                .build();
-
-        GithubBaseComponent githubComponent = DaggerGithubBaseComponent.builder()
-                .networkBaseComponent(networkComponent)
-                .build();
 
         InteractorComponent interactorComponent = DaggerInteractorMockComponent.builder()
-               .githubComponent(githubComponent)
                 .build();
 
        return DaggerPresenterBaseComponent.builder()
