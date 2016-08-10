@@ -62,22 +62,18 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
             getView().showRefreshing(true);
         }
 
-        EspressoIdlingResource.increment();
-
         mInteractor.load(new UserContract.Interactor.OnLoadListener() {
             @Override
             public void onLoadSuccess(ArrayList<User> users) {
                 loading = false;
                 getView().showRefreshing(false);
                 getView().setUsers(users);
-                EspressoIdlingResource.decrement();
             }
 
             @Override
             public void onLoadError() {
                 loading = false;
                 getView().showRefreshing(false);
-                EspressoIdlingResource.decrement();
             }
         });
     }
