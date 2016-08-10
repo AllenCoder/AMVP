@@ -28,11 +28,11 @@ public class AndroidTestUtils {
         PresenterCache.getInstance().remove(rule.getActivity().getPresenterKey());
     }
 
-    public static void unregisterIdlingResource(ActivityTestRule<TestActivity> rule) {
-        Espresso.unregisterIdlingResources(rule.getActivity().getIdlingResource());
+    public static void unregisterIdlingResource() {
+        Espresso.unregisterIdlingResources(EspressoIdlingResource.getIdlingResource());
     }
 
-    public static void registerIdlingResource(ActivityTestRule<TestActivity> rule) {
-        Espresso.registerIdlingResources(rule.getActivity().getIdlingResource());
+    public static void registerIdlingResource() {
+        Espresso.registerIdlingResources(EspressoIdlingResource.getIdlingResource());
     }
 }

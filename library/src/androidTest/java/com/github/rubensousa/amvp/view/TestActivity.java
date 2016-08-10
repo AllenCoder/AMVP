@@ -16,7 +16,7 @@
 
 package com.github.rubensousa.amvp.view;
 
-import android.content.pm.ActivityInfo;
+
 import android.os.Bundle;
 
 import com.github.rubensousa.amvp.MvpPresenter;
@@ -32,7 +32,7 @@ public class TestActivity extends MvpAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            getIdlingResource().decrement();
+            EspressoIdlingResource.decrement();
         }
     }
 
@@ -44,19 +44,6 @@ public class TestActivity extends MvpAppCompatActivity {
 
     public boolean createdPresenter() {
         return mCreatedPresenter;
-    }
-
-    public void recreate(){
-        super.recreate();
-    }
-
-    public void rotate() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-    }
-
-
-    public SimpleCountingIdlingResource getIdlingResource() {
-        return EspressoIdlingResource.getIdlingResource();
     }
 
 

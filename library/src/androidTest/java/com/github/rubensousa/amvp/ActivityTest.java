@@ -24,6 +24,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.rubensousa.amvp.cache.PresenterCache;
+import com.github.rubensousa.amvp.utils.EspressoIdlingResource;
 import com.github.rubensousa.amvp.utils.SimpleCountingIdlingResource;
 import com.github.rubensousa.amvp.view.TestActivity;
 import com.github.rubensousa.amvp.utils.AndroidTestUtils;
@@ -40,9 +41,6 @@ import static org.junit.Assert.assertTrue;
 @LargeTest
 public class ActivityTest {
 
-    private SimpleCountingIdlingResource mIdlingResource;
-
-
     @Rule
     public ActivityTestRule<TestActivity> mTestRule
             = new ActivityTestRule<>(TestActivity.class, true, false);
@@ -50,8 +48,7 @@ public class ActivityTest {
     @Before
     public void register() {
         mTestRule.launchActivity(new Intent());
-        AndroidTestUtils.registerIdlingResource(mTestRule);
-        mIdlingResource = mTestRule.getActivity().getIdlingResource();
+        AndroidTestUtils.registerIdlingResource();
     }
 
     @Test
@@ -74,7 +71,7 @@ public class ActivityTest {
         // and createPresenter would still be true
         Intent intent = activity.getIntent();
         mTestRule.launchActivity(intent);
-        mIdlingResource.increment();
+        EspressoIdlingResource.increment();
 
         activity = mTestRule.getActivity();
 
@@ -84,6 +81,6 @@ public class ActivityTest {
 
     @After
     public void clean() {
-        AndroidTestUtils.unregisterIdlingResource(mTestRule);
+        AndroidTestUtils.unregisterIdlingResource();
     }
 }
