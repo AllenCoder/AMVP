@@ -99,9 +99,10 @@ dependencies {
     androidTestCompile "com.android.support.test:runner:$junitRulesVersion"
     androidTestCompile "com.android.support.test:rules:$junitRulesVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-web:$espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+    androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$espressoVersion"){
+        exclude module: 'support-v4'
+    }
+    compile "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
     compile project(':library')
 }
 
