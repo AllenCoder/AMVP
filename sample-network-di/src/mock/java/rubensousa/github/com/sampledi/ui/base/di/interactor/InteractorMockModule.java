@@ -25,7 +25,6 @@ import rubensousa.github.com.sampledi.ui.userlist.UserInteractorMock;
 @Module
 public class InteractorMockModule {
 
-    @InteractorScope
     @Provides
     public UserContract.Interactor getMainInteractor() {
         return new UserInteractorMock();

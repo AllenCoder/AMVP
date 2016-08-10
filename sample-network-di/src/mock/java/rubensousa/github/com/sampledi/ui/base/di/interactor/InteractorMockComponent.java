@@ -18,8 +18,9 @@ package rubensousa.github.com.sampledi.ui.base.di.interactor;
 
 
 import dagger.Component;
+import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterScope;
 
-@InteractorScope
+@PresenterScope
 @Component(modules = InteractorMockModule.class)
 public interface InteractorMockComponent extends InteractorComponent {
 

@@ -26,7 +26,6 @@ import rubensousa.github.com.sampledi.ui.userlist.UserPresenter;
 @Module
 public class PresenterModule {
 
-    @ActivityScope
     @Provides
     public UserContract.Presenter getMainPresenter(UserContract.Interactor interactor) {
         return new UserPresenter(interactor);

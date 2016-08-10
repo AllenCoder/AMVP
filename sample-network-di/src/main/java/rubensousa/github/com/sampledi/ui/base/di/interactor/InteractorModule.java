@@ -27,7 +27,6 @@ import rubensousa.github.com.sampledi.ui.userlist.UserInteractor;
 @Module
 public class InteractorModule {
 
-    @PresenterScope
     @Provides
     public UserContract.Interactor getMainInteractor(GithubUserService service) {
         return new UserInteractor(service);
