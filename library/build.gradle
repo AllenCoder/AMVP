@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.rubensousa'
+group = 'com.github.rubensousa'
 
 android {
     compileSdkVersion 24
@@ -20,11 +20,30 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '24.1.1'
+    espressoVersion = '2.2.2'
+    junitRulesVersion = '0.5'
+    junitVersion = '4.12'
+    mockitoVersion = '1.10.19'
+    hamcrestVersion = '1.3'
+    powerMockitoVersion = '1.6.5'
+}
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:design:$supportLibVersion"
+
+    // Testing dependencies
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testCompile "org.powermock:powermock-module-junit4:$powerMockitoVersion"
+    testCompile "org.powermock:powermock-api-mockito:$powerMockitoVersion"
+    androidTestCompile "com.android.support.test:runner:$junitRulesVersion"
+    androidTestCompile "com.android.support.test:rules:$junitRulesVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }
 
 task sourcesJar(type: Jar) {
@@ -33,7 +52,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
-    failOnError  false
+    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
@@ -46,4 +65,16 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+//noinspection GroovyAssignabilityCheck
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$supportLibVersion"
+}
+
+configurations.compile.dependencies.each { compileDependency ->
+    println "Excluding compile dependency: ${compileDependency.getName()}"
+    configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
+        configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
+    }
 }
