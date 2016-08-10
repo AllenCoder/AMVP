@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import icepick.State;
 import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.ui.base.BasePresenter;
+import rubensousa.github.com.sampledi.utils.EspressoIdlingResource;
 
 public class UserPresenter extends BasePresenter<UserContract.View> implements UserContract.Presenter {
 
@@ -61,18 +62,22 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
             getView().showRefreshing(true);
         }
 
+        EspressoIdlingResource.increment();
+
         mInteractor.load(new UserContract.Interactor.OnLoadListener() {
             @Override
             public void onLoadSuccess(ArrayList<User> users) {
                 loading = false;
                 getView().showRefreshing(false);
                 getView().setUsers(users);
+                EspressoIdlingResource.decrement();
             }
 
             @Override
             public void onLoadError() {
                 loading = false;
                 getView().showRefreshing(false);
+                EspressoIdlingResource.decrement();
             }
         });
     }

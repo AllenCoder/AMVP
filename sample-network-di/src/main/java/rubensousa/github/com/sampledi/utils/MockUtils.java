@@ -29,14 +29,6 @@ public class MockUtils {
         users.add(new User("Facebook", "www.facebook.com","https://www.facebook.com/images/fb_icon_325x325.png"));
         users.add(new User("Twitter","www.twitter.com", "https://pbs.twimg.com/profile_images/622211370247827456/VD0SebK3.png"));
         users.add(new User("Youtube", "www.youtube.com","https://s.ytimg.com/yts/img/yt_1200-vfl4C3T0K.png"));
-        users.add(new User("Google", "www.google.com", "https://lh4.googleusercontent.com/-IhVc_Wxy6dY/AAAAAAAAAAI/AAAAAAAAFUw/YGRzJd5jolg/photo.jpg"));
-        users.add(new User("Facebook", "www.facebook.com","https://www.facebook.com/images/fb_icon_325x325.png"));
-        users.add(new User("Twitter","www.twitter.com", "https://pbs.twimg.com/profile_images/622211370247827456/VD0SebK3.png"));
-        users.add(new User("Youtube", "www.youtube.com","https://s.ytimg.com/yts/img/yt_1200-vfl4C3T0K.png"));
-        users.add(new User("Google", "www.google.com", "https://lh4.googleusercontent.com/-IhVc_Wxy6dY/AAAAAAAAAAI/AAAAAAAAFUw/YGRzJd5jolg/photo.jpg"));
-        users.add(new User("Facebook", "www.facebook.com","https://www.facebook.com/images/fb_icon_325x325.png"));
-        users.add(new User("Twitter","www.twitter.com", "https://pbs.twimg.com/profile_images/622211370247827456/VD0SebK3.png"));
-        users.add(new User("Youtube", "www.youtube.com","https://s.ytimg.com/yts/img/yt_1200-vfl4C3T0K.png"));
         return users;
     }
 }

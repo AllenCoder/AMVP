@@ -18,9 +18,10 @@ package rubensousa.github.com.sampledi.ui.base.di.presenter;
 
 
 import dagger.Component;
+import rubensousa.github.com.sampledi.data.network.ActivityScope;
 import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorComponent;
 
-@PresenterScope
+@ActivityScope
 @Component(dependencies = InteractorComponent.class, modules = PresenterModule.class)
 public interface PresenterBaseComponent extends PresenterComponent {
 

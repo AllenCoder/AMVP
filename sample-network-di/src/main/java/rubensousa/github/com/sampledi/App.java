@@ -23,16 +23,11 @@ import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
 
 public class App extends Application {
 
-    private PresenterComponent mPresenterComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mPresenterComponent = FlavorComponent.createPresenterComponent();
-    }
-
-    public PresenterComponent getPresenterComponent() {
-        return mPresenterComponent;
+        // Create singleton components here
     }
 
 }

@@ -18,15 +18,27 @@ package rubensousa.github.com.sampledi.ui.base;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 
 import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
 
 import icepick.Icepick;
+import rubensousa.github.com.sampledi.ui.base.di.FlavorComponent;
+import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
+import rubensousa.github.com.sampledi.utils.EspressoIdlingResource;
 
 public abstract class BaseActivity<V extends Base.View<P>, P extends Base.Presenter<V>>
         extends MvpAppCompatActivity<V, P> implements Base.View<P> {
 
     private ProgressDialog mProgressDialog;
+    private PresenterComponent mPresenterComponent;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mPresenterComponent = FlavorComponent.createPresenterComponent();
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -41,6 +53,12 @@ public abstract class BaseActivity<V extends Base.View<P>, P extends Base.Presen
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenterComponent = null;
+    }
+
+    @Override
     public void showProgressDialog() {
         mProgressDialog = ProgressDialog.show(this, null, "Loading...", true);
     }
@@ -50,6 +68,15 @@ public abstract class BaseActivity<V extends Base.View<P>, P extends Base.Presen
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+    }
+
+    public PresenterComponent getPresenterComponent() {
+        return mPresenterComponent;
+    }
+
+    @VisibleForTesting
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 
 }

@@ -17,6 +17,7 @@
 package rubensousa.github.com.sampledi.ui.userlist;
 
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -112,7 +113,7 @@ public class UserActivity extends BaseActivity<UserContract.View, UserContract.P
 
     @Override
     public UserContract.Presenter createPresenter() {
-        ((App) getApplication()).getPresenterComponent().inject(this);
+        getPresenterComponent().inject(this);
         return mPresenter;
     }
 
@@ -123,19 +124,13 @@ public class UserActivity extends BaseActivity<UserContract.View, UserContract.P
     }
 
     @Override
-    public void showRefreshing(final boolean refreshing) {
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                if (swipeRefreshLayout != null) {
-                    swipeRefreshLayout.setRefreshing(refreshing);
-                }
-            }
-        });
+    public void showRefreshing(boolean refreshing) {
+        swipeRefreshLayout.setRefreshing(refreshing);
     }
 
     @Override
     public void onRefresh() {
         getPresenter().refresh();
     }
+
 }

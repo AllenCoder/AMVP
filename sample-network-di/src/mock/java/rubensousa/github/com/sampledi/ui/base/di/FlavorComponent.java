@@ -26,8 +26,7 @@ public class FlavorComponent {
 
     public static PresenterComponent createPresenterComponent() {
 
-        InteractorComponent interactorComponent = DaggerInteractorMockComponent.builder()
-                .build();
+        InteractorComponent interactorComponent = DaggerInteractorMockComponent.builder().build();
 
        return DaggerPresenterBaseComponent.builder()
                 .interactorComponent(interactorComponent)
