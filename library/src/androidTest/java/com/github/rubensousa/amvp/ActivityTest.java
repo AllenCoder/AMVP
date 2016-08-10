@@ -18,14 +18,12 @@ package com.github.rubensousa.amvp;
 
 
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.rubensousa.amvp.cache.PresenterCache;
 import com.github.rubensousa.amvp.utils.EspressoIdlingResource;
-import com.github.rubensousa.amvp.utils.SimpleCountingIdlingResource;
 import com.github.rubensousa.amvp.view.TestActivity;
 import com.github.rubensousa.amvp.utils.AndroidTestUtils;
 
@@ -71,12 +69,18 @@ public class ActivityTest {
         // and createPresenter would still be true
         Intent intent = activity.getIntent();
         mTestRule.launchActivity(intent);
-        EspressoIdlingResource.increment();
 
+        // The app will be busy now and we make it idle again on onCreate
+        EspressoIdlingResource.increment();
         activity = mTestRule.getActivity();
+
+        // onCreate was called
 
         // check if presenter wasn't created
         assertTrue(!activity.createdPresenter());
+
+        // check if presenter isn't null and was fetched from the cache
+        assertTrue(activity.getPresenter() != null);
     }
 
     @After

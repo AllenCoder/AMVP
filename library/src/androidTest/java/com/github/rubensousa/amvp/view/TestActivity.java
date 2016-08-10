@@ -21,7 +21,6 @@ import android.os.Bundle;
 
 import com.github.rubensousa.amvp.MvpPresenter;
 import com.github.rubensousa.amvp.utils.EspressoIdlingResource;
-import com.github.rubensousa.amvp.utils.SimpleCountingIdlingResource;
 
 
 public class TestActivity extends MvpAppCompatActivity {
