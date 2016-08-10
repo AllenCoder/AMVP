@@ -11,11 +11,18 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    // Always show the result of every unit test, even if it passes.
+    testOptions.unitTests.all {
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
     }
 }
@@ -44,6 +51,7 @@ dependencies {
     androidTestCompile "com.android.support.test:runner:$junitRulesVersion"
     androidTestCompile "com.android.support.test:rules:$junitRulesVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
 }
 
 task sourcesJar(type: Jar) {
