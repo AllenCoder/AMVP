@@ -74,7 +74,7 @@ public class UserListAndroidTestMock {
     @Test
     public void refresh() {
         // Call delete to make sure the items are set again
-        delete();
+        onView(withId(R.id.action_delete)).perform(ViewActions.click());
         onView(withId(R.id.swipeRefreshLayout)).perform(ViewActions.swipeDown());
         onView(AndroidTestUtils.withItemText("Google")).check(matches(isDisplayed()));
         onView(AndroidTestUtils.withItemText("Facebook")).check(matches(isDisplayed()));

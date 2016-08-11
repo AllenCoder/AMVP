@@ -23,12 +23,12 @@ import rubensousa.github.com.sampledi.utils.MockUtils;
 public class UserInteractorMock extends BaseInteractor implements UserContract.Interactor {
 
     @Override
-    public void refresh(OnLoadListener listener) {
+    public void refresh(final OnLoadListener listener) {
         listener.onLoadSuccess(MockUtils.getUsers());
     }
 
     @Override
-    public void load(OnLoadListener listener) {
+    public void load(final OnLoadListener listener) {
         listener.onLoadSuccess(MockUtils.getUsers());
     }
 

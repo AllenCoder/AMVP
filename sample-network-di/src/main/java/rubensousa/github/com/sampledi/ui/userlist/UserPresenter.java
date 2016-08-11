@@ -28,9 +28,8 @@ import javax.inject.Inject;
 import icepick.State;
 import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.ui.base.BasePresenter;
-import rubensousa.github.com.sampledi.utils.EspressoIdlingResource;
 
-public class UserPresenter extends BasePresenter<UserContract.View> implements UserContract.Presenter {
+public class UserPresenter extends BasePresenter<UserContract.View> implements UserContract.Presenter, UserContract.Interactor.OnLoadListener {
 
     @State
     boolean loading;
@@ -62,20 +61,7 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
             getView().showRefreshing(true);
         }
 
-        mInteractor.load(new UserContract.Interactor.OnLoadListener() {
-            @Override
-            public void onLoadSuccess(ArrayList<User> users) {
-                loading = false;
-                getView().showRefreshing(false);
-                getView().setUsers(users);
-            }
-
-            @Override
-            public void onLoadError() {
-                loading = false;
-                getView().showRefreshing(false);
-            }
-        });
+        mInteractor.load(this);
     }
 
     @Override
@@ -86,19 +72,21 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
             getView().showRefreshing(true);
         }
 
-        mInteractor.refresh(new UserContract.Interactor.OnLoadListener() {
-            @Override
-            public void onLoadSuccess(ArrayList<User> users) {
-                refreshing = false;
-                getView().showRefreshing(false);
-                getView().setUsers(users);
-            }
+        mInteractor.refresh(this);
+    }
 
-            @Override
-            public void onLoadError() {
-                refreshing = false;
-                getView().showRefreshing(false);
-            }
-        });
+    @Override
+    public void onLoadSuccess(ArrayList<User> users) {
+        loading = false;
+        refreshing = false;
+        getView().showRefreshing(false);
+        getView().setUsers(users);
+    }
+
+    @Override
+    public void onLoadError() {
+        loading = false;
+        refreshing = false;
+        getView().showRefreshing(false);
     }
 }

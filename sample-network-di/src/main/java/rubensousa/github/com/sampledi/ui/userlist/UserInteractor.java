@@ -28,7 +28,6 @@ import rubensousa.github.com.sampledi.data.model.User;
 import rubensousa.github.com.sampledi.data.network.api.GithubUserService;
 import rubensousa.github.com.sampledi.data.network.api.RetrofitRequest;
 import rubensousa.github.com.sampledi.ui.base.BaseInteractor;
-import rubensousa.github.com.sampledi.utils.EspressoIdlingResource;
 
 public class UserInteractor extends BaseInteractor implements UserContract.Interactor {
 
@@ -49,8 +48,6 @@ public class UserInteractor extends BaseInteractor implements UserContract.Inter
             return;
         }
 
-        EspressoIdlingResource.increment();
-
         mLoadListener = listener;
 
         RetrofitRequest<ArrayList<User>> request
@@ -62,13 +59,11 @@ public class UserInteractor extends BaseInteractor implements UserContract.Inter
                 } else {
                     mLoadListener.onLoadError();
                 }
-                EspressoIdlingResource.decrement();
             }
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 mLoadListener.onLoadError();
-                EspressoIdlingResource.decrement();
             }
         });
 
@@ -97,9 +92,7 @@ public class UserInteractor extends BaseInteractor implements UserContract.Inter
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-
                 mLoadListener.onLoadError();
-
             }
         });
 

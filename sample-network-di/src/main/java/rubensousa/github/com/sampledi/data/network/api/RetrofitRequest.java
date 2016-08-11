@@ -21,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rubensousa.github.com.sampledi.data.network.NetworkRequest;
+import rubensousa.github.com.sampledi.utils.EspressoIdlingResource;
 
 public class RetrofitRequest<T> extends NetworkRequest<T, Throwable> implements Callback<T> {
 
@@ -54,6 +55,10 @@ public class RetrofitRequest<T> extends NetworkRequest<T, Throwable> implements 
                 mError = null;
                 mCallback = null;
             }
+        }
+
+        if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
+            EspressoIdlingResource.decrement();
         }
     }
 
@@ -94,6 +99,7 @@ public class RetrofitRequest<T> extends NetworkRequest<T, Throwable> implements 
         super.start();
         if (mCall != null) {
             mCall.enqueue(this);
+            EspressoIdlingResource.increment();
         }
     }
 
