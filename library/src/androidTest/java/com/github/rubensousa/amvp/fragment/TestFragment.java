@@ -57,13 +57,4 @@ public class TestFragment extends MvpSupportFragment {
     public boolean createdPresenter() {
         return mCreatePresenter;
     }
-
-    @VisibleForTesting
-    public void showDialog() {
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(new TestDialogFragment(), "DialogTag")
-                .commit();
-    }
-
 }

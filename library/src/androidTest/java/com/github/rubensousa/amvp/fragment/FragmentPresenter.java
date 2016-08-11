@@ -16,9 +16,9 @@
 
 package com.github.rubensousa.amvp.fragment;
 
-import com.github.rubensousa.amvp.AbstractPresenter;
+import com.github.rubensousa.amvp.activity.ActivityPresenter;
 
 
-public class FragmentPresenter extends AbstractPresenter{
+public class FragmentPresenter extends ActivityPresenter{
 
 }

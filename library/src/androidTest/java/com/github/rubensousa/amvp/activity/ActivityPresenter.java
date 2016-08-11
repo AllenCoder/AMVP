@@ -16,9 +16,44 @@
 
 package com.github.rubensousa.amvp.activity;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.github.rubensousa.amvp.AbstractPresenter;
 
 
-public class ActivityPresenter extends AbstractPresenter{
+public class ActivityPresenter extends AbstractPresenter {
 
+    public static final String STATE_ID = "id";
+
+    private Bundle mSavedState;
+    private int mId;
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_ID, mId);
+        mSavedState = outState;
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            mId = savedInstanceState.getInt(STATE_ID);
+        }
+    }
+
+    public Bundle getSavedState() {
+        return mSavedState;
+    }
+
+    public void setId(int id){
+        mId = id;
+    }
+
+    public int getId() {
+        return mId;
+    }
 }

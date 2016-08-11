@@ -35,6 +35,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -88,7 +90,48 @@ public class ActivityTest {
         assertTrue(!recreatedActivity.createdPresenter());
 
         // check if presenter isn't null and was fetched from the cache
-        assertTrue(recreatedActivity.getPresenter() != null);
+        assertNotNull(recreatedActivity.getPresenter());
+    }
+
+    @Test
+    public void presenterSaveState() {
+        final TestActivity activity = mTestRule.getActivity();
+        ActivityPresenter presenter = (ActivityPresenter) activity.getPresenter();
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                activity.recreate();
+                mIdlingResource.increment();
+            }
+        });
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        assertNotNull(presenter.getSavedState());
+    }
+
+    @Test
+    public void presenterStateRestore() {
+        final TestActivity activity = mTestRule.getActivity();
+        ActivityPresenter presenter = (ActivityPresenter) activity.getPresenter();
+
+        int id = 5;
+
+        // Set an id to be saved
+        presenter.setId(id);
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                activity.recreate();
+                mIdlingResource.increment();
+            }
+        });
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        // Check if the id was restored
+        assertEquals(presenter.getId(),id);
     }
 
     @After
