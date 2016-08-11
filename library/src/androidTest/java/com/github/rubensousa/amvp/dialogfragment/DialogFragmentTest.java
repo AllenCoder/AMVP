@@ -158,8 +158,6 @@ public class DialogFragmentTest {
 
         DialogPresenter presenter = (DialogPresenter) fragment.getPresenter();
 
-        //mActivityIdlingResource.increment();
-
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {

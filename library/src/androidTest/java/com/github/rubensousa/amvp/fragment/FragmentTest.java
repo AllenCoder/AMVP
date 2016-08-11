@@ -45,7 +45,6 @@ import static org.junit.Assert.assertTrue;
 @LargeTest
 public class FragmentTest {
 
-    private SimpleCountingIdlingResource mActivityIdlingResource;
     private SimpleCountingIdlingResource mFragmentIdlingResource;
 
     @Rule
@@ -57,7 +56,6 @@ public class FragmentTest {
         Intent intent = new Intent();
         intent.putExtra(TestActivity.CREATE_FRAGMENT, true);
         mTestRule.launchActivity(intent);
-        mActivityIdlingResource = AndroidTestUtils.getIdlingResource(mTestRule);
     }
 
     @Test
@@ -84,7 +82,6 @@ public class FragmentTest {
             @Override
             public void run() {
                 activity.recreate();
-                mActivityIdlingResource.increment();
             }
         });
 
@@ -104,11 +101,11 @@ public class FragmentTest {
         assertTrue(!fragment.createdPresenter());
 
         // check if presenter isn't null and was fetched from the cache
-        assertTrue(fragment.getPresenter() != null);
+        assertNotNull(fragment.getPresenter());
     }
 
     @Test
-    public void presenterDestruction() {
+    public void presenterDestructionFinish() {
         // Fragment presenters should be destroyed and uncached if the activity is finishing
 
         TestActivity activity = mTestRule.getActivity();
@@ -123,10 +120,9 @@ public class FragmentTest {
         // We must wait until fragment's onPause is called
         mFragmentIdlingResource = AndroidTestUtils.getIdlingResource(fragment);
         mFragmentIdlingResource.increment();
+        Espresso.registerIdlingResources(mFragmentIdlingResource);
 
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
-
-        // Check it was destroyed
+        // Check if it was destroyed
         assertTrue(presenter.isDestroyed());
 
         // Check if it doesn't exist in the cache
@@ -146,7 +142,7 @@ public class FragmentTest {
             @Override
             public void run() {
                 activity.recreate();
-                mActivityIdlingResource.increment();
+
             }
         });
 
@@ -172,7 +168,6 @@ public class FragmentTest {
             @Override
             public void run() {
                 activity.recreate();
-                mActivityIdlingResource.increment();
             }
         });
 
@@ -186,10 +181,6 @@ public class FragmentTest {
     public void clean() {
         if (mFragmentIdlingResource != null) {
             Espresso.unregisterIdlingResources(mFragmentIdlingResource);
-        }
-
-        if (mActivityIdlingResource != null) {
-            Espresso.unregisterIdlingResources(mActivityIdlingResource);
         }
 
         ActivityCache.clear();
