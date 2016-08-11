@@ -16,9 +16,9 @@
 
 package com.github.rubensousa.amvp.dialogfragment;
 
-import com.github.rubensousa.amvp.AbstractPresenter;
+import com.github.rubensousa.amvp.fragment.FragmentPresenter;
 
 
-public class DialogPresenter extends AbstractPresenter{
+public class DialogPresenter extends FragmentPresenter{
 
 }

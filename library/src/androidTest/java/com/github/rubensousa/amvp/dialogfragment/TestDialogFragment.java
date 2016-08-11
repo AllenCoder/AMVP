@@ -17,6 +17,7 @@
 package com.github.rubensousa.amvp.dialogfragment;
 
 import com.github.rubensousa.amvp.MvpPresenter;
+import com.github.rubensousa.amvp.utils.AndroidTestUtils;
 import com.github.rubensousa.amvp.view.MvpAppCompatDialogFragment;
 
 
@@ -24,9 +25,24 @@ public class TestDialogFragment extends MvpAppCompatDialogFragment {
 
     public static final String TAG = "testDialogFragment";
 
+    private boolean mCreatedPresenter;
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!AndroidTestUtils.getIdlingResource(this).isIdleNow()) {
+            AndroidTestUtils.getIdlingResource(this).decrement();
+        }
+    }
+
     @Override
     public MvpPresenter createPresenter() {
+        mCreatedPresenter = true;
         return new DialogPresenter();
+    }
+
+    public boolean createdPresenter(){
+        return mCreatedPresenter;
     }
 
 }

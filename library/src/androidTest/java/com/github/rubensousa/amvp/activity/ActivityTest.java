@@ -141,7 +141,7 @@ public class ActivityTest {
         ActivityPresenter presenter = (ActivityPresenter) activity.getPresenter();
         activity.finish();
 
-        // Check it was destroyed
+        // Check if it was destroyed
         assertTrue(presenter.isDestroyed());
 
         // Check if it doesn't exist in the cache

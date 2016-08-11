@@ -20,6 +20,7 @@ package com.github.rubensousa.amvp.activity;
 import android.os.Bundle;
 
 import com.github.rubensousa.amvp.MvpPresenter;
+import com.github.rubensousa.amvp.dialogfragment.TestDialogFragment;
 import com.github.rubensousa.amvp.utils.ActivityCache;
 import com.github.rubensousa.amvp.utils.EspressoIdlingResource;
 import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
@@ -29,6 +30,7 @@ import com.github.rubensousa.amvp.fragment.TestFragment;
 public class TestActivity extends MvpAppCompatActivity {
 
     public static final String CREATE_FRAGMENT = "create_fragment";
+    public static final String CREATE_DIALOG_FRAGMENT = "create_dialog_fragment";
 
     private boolean mCreatedPresenter;
 
@@ -40,6 +42,10 @@ public class TestActivity extends MvpAppCompatActivity {
             if (getIntent().getBooleanExtra(CREATE_FRAGMENT, false)) {
                 getSupportFragmentManager().beginTransaction()
                         .add(new TestFragment(), TestFragment.TAG)
+                        .commit();
+            } else if (getIntent().getBooleanExtra(CREATE_DIALOG_FRAGMENT, false)) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(new TestDialogFragment(), TestDialogFragment.TAG)
                         .commit();
             }
         }

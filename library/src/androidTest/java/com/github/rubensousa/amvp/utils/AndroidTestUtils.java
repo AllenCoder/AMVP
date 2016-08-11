@@ -20,6 +20,7 @@ import android.support.test.rule.ActivityTestRule;
 
 import com.github.rubensousa.amvp.cache.PresenterCache;
 import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
+import com.github.rubensousa.amvp.view.MvpAppCompatDialogFragment;
 import com.github.rubensousa.amvp.view.MvpSupportFragment;
 import com.github.rubensousa.amvp.activity.TestActivity;
 
@@ -35,6 +36,10 @@ public class AndroidTestUtils {
     }
 
     public static <T extends MvpSupportFragment> SimpleCountingIdlingResource getIdlingResource(T fragment) {
+        return EspressoIdlingResource.getIdlingResource(fragment.getPresenterKey());
+    }
+
+    public static <T extends MvpAppCompatDialogFragment> SimpleCountingIdlingResource getIdlingResource(T fragment) {
         return EspressoIdlingResource.getIdlingResource(fragment.getPresenterKey());
     }
 }
