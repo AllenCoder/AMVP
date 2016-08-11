@@ -18,7 +18,7 @@ package rubensousa.github.com.sampledi.ui.base.di;
 
 
 import rubensousa.github.com.sampledi.ui.base.di.interactor.DaggerInteractorMockComponent;
-import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorComponent;
+import rubensousa.github.com.sampledi.ui.base.di.interactor.InteractorBaseComponent;
 import rubensousa.github.com.sampledi.ui.base.di.presenter.DaggerPresenterBaseComponent;
 import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterComponent;
 
@@ -26,10 +26,10 @@ public class FlavorComponent {
 
     public static PresenterComponent createPresenterComponent() {
 
-        InteractorComponent interactorComponent = DaggerInteractorMockComponent.builder().build();
+        InteractorBaseComponent interactorComponent = DaggerInteractorMockComponent.builder().build();
 
-       return DaggerPresenterBaseComponent.builder()
-                .interactorComponent(interactorComponent)
+        return DaggerPresenterBaseComponent.builder()
+                .interactorBaseComponent(interactorComponent)
                 .build();
     }
 }

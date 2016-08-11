@@ -22,6 +22,6 @@ import rubensousa.github.com.sampledi.ui.base.di.presenter.PresenterScope;
 
 @PresenterScope
 @Component(modules = InteractorMockModule.class)
-public interface InteractorMockComponent extends InteractorComponent {
+public interface InteractorMockComponent extends InteractorBaseComponent {
 
 }
