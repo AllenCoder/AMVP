@@ -17,7 +17,6 @@
 package com.github.rubensousa.amvp.fragment;
 
 
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -37,6 +36,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -107,7 +108,7 @@ public class FragmentTest {
     }
 
     @Test
-    public void presenterDestroy() {
+    public void presenterDestruction() {
         // Fragment presenters should be destroyed and uncached if the activity is finishing
 
         TestActivity activity = mTestRule.getActivity();
@@ -130,6 +131,55 @@ public class FragmentTest {
 
         // Check if it doesn't exist in the cache
         assertNull(PresenterCache.getInstance().get(fragment.getPresenterKey()));
+    }
+
+    @Test
+    public void presenterStateSaving() {
+        final TestActivity activity = mTestRule.getActivity();
+
+        TestFragment fragment = (TestFragment) activity.getSupportFragmentManager()
+                .findFragmentByTag(TestFragment.TAG);
+
+        FragmentPresenter presenter = (FragmentPresenter) fragment.getPresenter();
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                activity.recreate();
+                mActivityIdlingResource.increment();
+            }
+        });
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        assertNotNull(presenter.getSavedState());
+    }
+
+    @Test
+    public void presenterStateRestoring() {
+        final TestActivity activity = mTestRule.getActivity();
+
+        TestFragment fragment = (TestFragment) activity.getSupportFragmentManager()
+                .findFragmentByTag(TestFragment.TAG);
+
+        FragmentPresenter presenter = (FragmentPresenter) fragment.getPresenter();
+
+        int id = 5;
+
+        // Set an id to be saved
+        presenter.setId(id);
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                activity.recreate();
+                mActivityIdlingResource.increment();
+            }
+        });
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        // Check if the id was restored
+        assertEquals(presenter.getId(), id);
     }
 
     @After
