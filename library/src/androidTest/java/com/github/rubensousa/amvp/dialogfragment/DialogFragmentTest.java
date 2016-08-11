@@ -26,8 +26,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.github.rubensousa.amvp.activity.TestActivity;
 import com.github.rubensousa.amvp.cache.PresenterCache;
-import com.github.rubensousa.amvp.fragment.FragmentPresenter;
-import com.github.rubensousa.amvp.fragment.TestFragment;
 import com.github.rubensousa.amvp.utils.ActivityCache;
 import com.github.rubensousa.amvp.utils.AndroidTestUtils;
 import com.github.rubensousa.amvp.utils.SimpleCountingIdlingResource;
@@ -47,7 +45,6 @@ import static org.junit.Assert.assertTrue;
 @LargeTest
 public class DialogFragmentTest {
 
-    private SimpleCountingIdlingResource mActivityIdlingResource;
     private SimpleCountingIdlingResource mFragmentIdlingResource;
 
     @Rule
@@ -59,7 +56,6 @@ public class DialogFragmentTest {
         Intent intent = new Intent();
         intent.putExtra(TestActivity.CREATE_DIALOG_FRAGMENT, true);
         mTestRule.launchActivity(intent);
-        mActivityIdlingResource = AndroidTestUtils.getIdlingResource(mTestRule);
     }
 
     @Test
@@ -86,7 +82,6 @@ public class DialogFragmentTest {
             @Override
             public void run() {
                 activity.recreate();
-                mActivityIdlingResource.increment();
             }
         });
 
@@ -106,7 +101,7 @@ public class DialogFragmentTest {
         assertTrue(!fragment.createdPresenter());
 
         // check if presenter isn't null and was fetched from the cache
-        assertTrue(fragment.getPresenter() != null);
+        assertNotNull(fragment.getPresenter());
     }
 
     @Test
@@ -125,8 +120,7 @@ public class DialogFragmentTest {
         // We must wait until fragment's onPause is called
         mFragmentIdlingResource = AndroidTestUtils.getIdlingResource(fragment);
         mFragmentIdlingResource.increment();
-
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        Espresso.registerIdlingResources(mFragmentIdlingResource);
 
         // Check if it was destroyed
         assertTrue(presenter.isDestroyed());
@@ -164,11 +158,13 @@ public class DialogFragmentTest {
 
         DialogPresenter presenter = (DialogPresenter) fragment.getPresenter();
 
+        //mActivityIdlingResource.increment();
+
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 activity.recreate();
-                mActivityIdlingResource.increment();
+
             }
         });
 
@@ -194,7 +190,6 @@ public class DialogFragmentTest {
             @Override
             public void run() {
                 activity.recreate();
-                mActivityIdlingResource.increment();
             }
         });
 
@@ -208,10 +203,6 @@ public class DialogFragmentTest {
     public void clean() {
         if (mFragmentIdlingResource != null) {
             Espresso.unregisterIdlingResources(mFragmentIdlingResource);
-        }
-
-        if (mActivityIdlingResource != null) {
-            Espresso.unregisterIdlingResources(mActivityIdlingResource);
         }
 
         ActivityCache.clear();
