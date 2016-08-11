@@ -91,6 +91,12 @@ public abstract class MvpBottomSheetDialogFragment<V extends MvpView<P>, P exten
     }
 
     @Override
+    public void dismiss() {
+        super.dismiss();
+        mDelegate.destroyPresenter();
+    }
+
+    @Override
     public P getPresenter() {
         return mPresenter;
     }

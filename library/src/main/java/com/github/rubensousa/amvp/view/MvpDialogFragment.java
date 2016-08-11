@@ -17,6 +17,7 @@
 package com.github.rubensousa.amvp.view;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -87,6 +88,12 @@ public abstract class MvpDialogFragment<V extends MvpView<P>, P extends MvpPrese
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mDelegate.attachView();
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        mDelegate.destroyPresenter();
     }
 
     @Override

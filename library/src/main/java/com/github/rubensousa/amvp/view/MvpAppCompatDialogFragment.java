@@ -91,6 +91,12 @@ public abstract class MvpAppCompatDialogFragment<V extends MvpView<P>, P extends
     }
 
     @Override
+    public void dismiss() {
+        super.dismiss();
+        mDelegate.destroyPresenter();
+    }
+
+    @Override
     public P getPresenter() {
         return mPresenter;
     }

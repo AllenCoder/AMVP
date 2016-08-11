@@ -185,7 +185,7 @@ public class FragmentTest {
     @After
     public void clean() {
         if (mFragmentIdlingResource != null) {
-            Espresso.unregisterIdlingResources(mActivityIdlingResource);
+            Espresso.unregisterIdlingResources(mFragmentIdlingResource);
         }
 
         if (mActivityIdlingResource != null) {
