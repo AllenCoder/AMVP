@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp.view;
+package com.github.rubensousa.amvp.dialogfragment;
 
 import com.github.rubensousa.amvp.AbstractPresenter;
 
 
-public class ActivityPresenter extends AbstractPresenter{
+public class DialogPresenter extends AbstractPresenter{
 
 }

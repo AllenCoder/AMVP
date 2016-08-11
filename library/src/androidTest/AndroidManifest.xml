@@ -18,7 +18,7 @@
     package="com.github.rubensousa.amvp">
 
     <application>
-        <activity android:name=".view.TestActivity"
+        <activity android:name=".activity.TestActivity"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -16,27 +16,24 @@
 
 package com.github.rubensousa.amvp.utils;
 
-import android.support.test.espresso.IdlingResource;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Contains a static reference to {@link IdlingResource}, only available in the 'mock' build type.
- */
+
 public class EspressoIdlingResource {
 
-    private static final String RESOURCE = "GLOBAL";
+    private static Map<String, SimpleCountingIdlingResource> mCountingIdlingResources
+            = new HashMap<>();
 
-    private static SimpleCountingIdlingResource mCountingIdlingResource =
-            new SimpleCountingIdlingResource(RESOURCE);
 
-    public static void increment() {
-        mCountingIdlingResource.increment();
-    }
-
-    public static void decrement() {
-        mCountingIdlingResource.decrement();
-    }
-
-    public static SimpleCountingIdlingResource getIdlingResource() {
-        return mCountingIdlingResource;
+    public static SimpleCountingIdlingResource getIdlingResource(String key) {
+        SimpleCountingIdlingResource idlingResource = mCountingIdlingResources.get(key);
+        if (idlingResource == null) {
+            SimpleCountingIdlingResource resource = new SimpleCountingIdlingResource(key);
+            mCountingIdlingResources.put(key, resource);
+            return resource;
+        } else {
+            return idlingResource;
+        }
     }
 }

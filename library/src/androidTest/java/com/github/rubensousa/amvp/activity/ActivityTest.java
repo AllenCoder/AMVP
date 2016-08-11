@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp;
+package com.github.rubensousa.amvp.activity;
 
 
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.rubensousa.amvp.cache.PresenterCache;
-import com.github.rubensousa.amvp.utils.EspressoIdlingResource;
-import com.github.rubensousa.amvp.view.TestActivity;
+import com.github.rubensousa.amvp.utils.ActivityCache;
 import com.github.rubensousa.amvp.utils.AndroidTestUtils;
+import com.github.rubensousa.amvp.utils.SimpleCountingIdlingResource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -39,20 +41,24 @@ import static org.junit.Assert.assertTrue;
 @LargeTest
 public class ActivityTest {
 
+    private SimpleCountingIdlingResource mIdlingResource;
+
     @Rule
     public ActivityTestRule<TestActivity> mTestRule
             = new ActivityTestRule<>(TestActivity.class, true, false);
 
     @Before
-    public void register() {
+    public void setup() {
         mTestRule.launchActivity(new Intent());
-        AndroidTestUtils.registerIdlingResource();
+        mIdlingResource = AndroidTestUtils.getIdlingResource(mTestRule);
+        Espresso.registerIdlingResources(mIdlingResource);
     }
 
     @Test
     public void presenterCreation() {
         TestActivity activity = mTestRule.getActivity();
 
+        // Check if presenter was created
         assertTrue(activity.getPresenter() != null);
 
         // Check if the presenter was cached
@@ -60,31 +66,33 @@ public class ActivityTest {
     }
 
     @Test
-    public void presenterCache() {
+    public void presenterCaching() {
 
-        TestActivity activity = mTestRule.getActivity();
+        final TestActivity activity = mTestRule.getActivity();
 
-        // Test activity recreation by launching a new one,
-        // since otherwise we're stuck with the same instance,
-        // and createPresenter would still be true
-        Intent intent = activity.getIntent();
-        mTestRule.launchActivity(intent);
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                activity.recreate();
+                mIdlingResource.increment();
+            }
+        });
 
-        // The app will be busy now and we make it idle again on onCreate
-        EspressoIdlingResource.increment();
-        activity = mTestRule.getActivity();
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
-        // onCreate was called
+        // onPostCreate was called, so we can get the recreated activity
+        TestActivity recreatedActivity
+                = (TestActivity) ActivityCache.get(activity.getPresenterKey());
 
         // check if presenter wasn't created
-        assertTrue(!activity.createdPresenter());
+        assertTrue(!recreatedActivity.createdPresenter());
 
         // check if presenter isn't null and was fetched from the cache
-        assertTrue(activity.getPresenter() != null);
+        assertTrue(recreatedActivity.getPresenter() != null);
     }
 
     @After
     public void clean() {
-        AndroidTestUtils.unregisterIdlingResource();
+        Espresso.unregisterIdlingResources(mIdlingResource);
     }
 }

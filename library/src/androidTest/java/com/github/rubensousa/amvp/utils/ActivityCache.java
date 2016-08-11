@@ -14,11 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp.view;
+package com.github.rubensousa.amvp.utils;
 
-import com.github.rubensousa.amvp.AbstractPresenter;
+import android.app.Activity;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public class DialogPresenter extends AbstractPresenter{
+// Used to get the new activity reference after the previous one has been recreated
+public class ActivityCache {
+
+    private static Map<String, Activity> sCache = new HashMap<>();
+
+    public static Activity get(String key){
+        return sCache.get(key);
+    }
+
+    public static void add(String key, Activity activity) {
+        sCache.put(key, activity);
+    }
+
+    public static void clear() {
+        sCache.clear();
+    }
 
 }

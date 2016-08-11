@@ -16,10 +16,12 @@
 
 package com.github.rubensousa.amvp.utils;
 
-import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
+
 import com.github.rubensousa.amvp.cache.PresenterCache;
-import com.github.rubensousa.amvp.view.TestActivity;
+import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
+import com.github.rubensousa.amvp.view.MvpSupportFragment;
+import com.github.rubensousa.amvp.activity.TestActivity;
 
 
 public class AndroidTestUtils {
@@ -28,11 +30,11 @@ public class AndroidTestUtils {
         PresenterCache.getInstance().remove(rule.getActivity().getPresenterKey());
     }
 
-    public static void unregisterIdlingResource() {
-        Espresso.unregisterIdlingResources(EspressoIdlingResource.getIdlingResource());
+    public static <T extends MvpAppCompatActivity> SimpleCountingIdlingResource getIdlingResource(ActivityTestRule<T> rule) {
+        return EspressoIdlingResource.getIdlingResource(rule.getActivity().getPresenterKey());
     }
 
-    public static void registerIdlingResource() {
-        Espresso.registerIdlingResources(EspressoIdlingResource.getIdlingResource());
+    public static <T extends MvpSupportFragment> SimpleCountingIdlingResource getIdlingResource(T fragment) {
+        return EspressoIdlingResource.getIdlingResource(fragment.getPresenterKey());
     }
 }

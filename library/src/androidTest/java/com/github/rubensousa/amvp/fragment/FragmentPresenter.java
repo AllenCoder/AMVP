@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp.view;
+package com.github.rubensousa.amvp.fragment;
 
-import com.github.rubensousa.amvp.MvpPresenter;
+import com.github.rubensousa.amvp.AbstractPresenter;
 
 
-public class TestDialogFragment extends MvpAppCompatDialogFragment{
-
-    @Override
-    public MvpPresenter createPresenter() {
-        return new DialogPresenter();
-    }
+public class FragmentPresenter extends AbstractPresenter{
 
 }

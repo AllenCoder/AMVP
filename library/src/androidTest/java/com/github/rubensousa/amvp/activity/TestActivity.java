@@ -14,24 +14,45 @@
  * limitations under the License.
  */
 
-package com.github.rubensousa.amvp.view;
+package com.github.rubensousa.amvp.activity;
 
 
 import android.os.Bundle;
 
 import com.github.rubensousa.amvp.MvpPresenter;
+import com.github.rubensousa.amvp.utils.ActivityCache;
 import com.github.rubensousa.amvp.utils.EspressoIdlingResource;
+import com.github.rubensousa.amvp.view.MvpAppCompatActivity;
+import com.github.rubensousa.amvp.fragment.TestFragment;
 
 
 public class TestActivity extends MvpAppCompatActivity {
+
+    public static final String CREATE_FRAGMENT = "create_fragment";
 
     private boolean mCreatedPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            if (getIntent().getBooleanExtra(CREATE_FRAGMENT, false)) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(new TestFragment(), TestFragment.TAG)
+                        .commit();
+            }
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        ActivityCache.add(getPresenterKey(), this);
         if (savedInstanceState != null) {
-            EspressoIdlingResource.decrement();
+            if (!EspressoIdlingResource.getIdlingResource(getPresenterKey()).isIdleNow()) {
+                EspressoIdlingResource.getIdlingResource(getPresenterKey()).decrement();
+            }
         }
     }
 
@@ -44,6 +65,4 @@ public class TestActivity extends MvpAppCompatActivity {
     public boolean createdPresenter() {
         return mCreatedPresenter;
     }
-
-
 }
