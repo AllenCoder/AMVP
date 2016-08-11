@@ -92,18 +92,6 @@ public abstract class MvpAppCompatActivity<V extends MvpView<P>, P extends MvpPr
     @Override
     public void finish() {
         mDelegate.destroyPresenter();
-        // TODO Remove this
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        // Destroy child fragments presenters
-        if (fragments != null) {
-            for (Fragment fragment : fragments) {
-                if (fragment instanceof MvpSupportFragment) {
-                    PresenterCache.getInstance()
-                            .remove(((MvpSupportFragment) fragment).getPresenterKey());
-
-                }
-            }
-        }
         super.finish();
     }
 
