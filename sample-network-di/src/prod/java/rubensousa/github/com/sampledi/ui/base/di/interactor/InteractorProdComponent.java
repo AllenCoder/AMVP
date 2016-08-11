@@ -22,6 +22,6 @@ import rubensousa.github.com.sampledi.data.network.api.GithubBaseComponent;
 
 @InteractorScope
 @Component(dependencies = GithubBaseComponent.class, modules = InteractorModule.class)
-public interface InteractorProdComponent extends InteractorComponent {
+public interface InteractorProdComponent extends InteractorBaseComponent {
 
 }

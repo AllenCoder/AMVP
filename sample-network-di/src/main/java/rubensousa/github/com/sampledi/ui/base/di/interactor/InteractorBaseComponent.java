@@ -20,6 +20,6 @@ package rubensousa.github.com.sampledi.ui.base.di.interactor;
 import rubensousa.github.com.sampledi.ui.userlist.UserContract;
 
 
-public interface InteractorComponent {
+public interface InteractorBaseComponent {
     UserContract.Interactor getMainInteractor();
 }
