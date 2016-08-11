@@ -29,6 +29,7 @@ public class ActivityPresenter extends AbstractPresenter {
 
     private Bundle mSavedState;
     private int mId;
+    private boolean mDestroyed;
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -45,6 +46,12 @@ public class ActivityPresenter extends AbstractPresenter {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDestroyed = true;
+    }
+
     public Bundle getSavedState() {
         return mSavedState;
     }
@@ -55,5 +62,9 @@ public class ActivityPresenter extends AbstractPresenter {
 
     public int getId() {
         return mId;
+    }
+
+    public boolean isDestroyed(){
+        return mDestroyed;
     }
 }

@@ -37,6 +37,7 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -94,7 +95,7 @@ public class ActivityTest {
     }
 
     @Test
-    public void presenterSaveState() {
+    public void presenterStateSaving() {
         final TestActivity activity = mTestRule.getActivity();
         ActivityPresenter presenter = (ActivityPresenter) activity.getPresenter();
 
@@ -111,7 +112,7 @@ public class ActivityTest {
     }
 
     @Test
-    public void presenterStateRestore() {
+    public void presenterStateRestoring() {
         final TestActivity activity = mTestRule.getActivity();
         ActivityPresenter presenter = (ActivityPresenter) activity.getPresenter();
 
@@ -131,7 +132,20 @@ public class ActivityTest {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
         // Check if the id was restored
-        assertEquals(presenter.getId(),id);
+        assertEquals(presenter.getId(), id);
+    }
+
+    @Test
+    public void presenterDestruction() {
+        TestActivity activity = mTestRule.getActivity();
+        ActivityPresenter presenter = (ActivityPresenter) activity.getPresenter();
+        activity.finish();
+
+        // Check it was destroyed
+        assertTrue(presenter.isDestroyed());
+
+        // Check if it doesn't exist in the cache
+        assertNull(PresenterCache.getInstance().get(activity.getPresenterKey()));
     }
 
     @After

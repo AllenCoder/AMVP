@@ -37,6 +37,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -114,6 +115,8 @@ public class FragmentTest {
         TestFragment fragment = (TestFragment) activity.getSupportFragmentManager()
                 .findFragmentByTag(TestFragment.TAG);
 
+        FragmentPresenter presenter = (FragmentPresenter) fragment.getPresenter();
+
         activity.finish();
 
         // We must wait until fragment's onPause is called
@@ -122,7 +125,11 @@ public class FragmentTest {
 
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
-        assertTrue(PresenterCache.getInstance().get(fragment.getPresenterKey()) == null);
+        // Check it was destroyed
+        assertTrue(presenter.isDestroyed());
+
+        // Check if it doesn't exist in the cache
+        assertNull(PresenterCache.getInstance().get(fragment.getPresenterKey()));
     }
 
     @After

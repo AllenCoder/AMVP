@@ -36,7 +36,9 @@ public class TestFragment extends MvpSupportFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            AndroidTestUtils.getIdlingResource(this).decrement();
+            if (!AndroidTestUtils.getIdlingResource(this).isIdleNow()) {
+                AndroidTestUtils.getIdlingResource(this).decrement();
+            }
         }
     }
 
